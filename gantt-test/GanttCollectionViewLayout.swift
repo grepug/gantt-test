@@ -10,14 +10,24 @@ import UIKit
 protocol GanttCollectionViewLayoutDelegate: AnyObject {
     func collectionView(_ collectionView: UICollectionView, sizeForColumn column: Int) -> CGSize
     func numberOfColumns() -> Int
+    func safeAreaTop() -> CGFloat
+    func contentSizeDidCalcualte(contentSize: CGSize)
 }
 
 class GanttCollectionViewLayout: UICollectionViewLayout {
     weak var delegate: GanttCollectionViewLayoutDelegate!
     
     var itemAttributes: [[UICollectionViewLayoutAttributes]] = []
-    var contentSize: CGSize = .zero
+    var contentSize: CGSize = .zero {
+        didSet {
+            delegate.contentSizeDidCalcualte(contentSize: contentSize)
+        }
+    }
     var itemsSizes: [CGSize] = []
+    
+    var safeAreaTop: CGFloat {
+        delegate.safeAreaTop()
+    }
     
     override var collectionViewContentSize: CGSize {
         contentSize
@@ -42,17 +52,18 @@ class GanttCollectionViewLayout: UICollectionViewLayout {
                 if section != 0 && item != 0 {
                     continue
                 }
-                
+
                 let attributes = layoutAttributesForItem(at: .init(item: item, section: section))!
                 if section == 0 {
-                    attributes.frame.origin.y = collectionView.contentOffset.y
-                    
+                    attributes.frame.origin.y = collectionView.contentOffset.y + safeAreaTop
+
                     print("y", collectionView.contentOffset.y,
+                          attributes.frame.origin.y,
                           collectionView.frame.maxY,
                           collectionView.frame.height,
                           collectionView.frame.minY)
                 }
-                
+
                 if item == 0 {
                     attributes.frame.origin.x = collectionView.contentOffset.x
                 }
@@ -114,12 +125,13 @@ private extension GanttCollectionViewLayout {
                     attributes.zIndex = 1024
                 case (_, 0), (0, _):
                     attributes.zIndex = 1023
-                default:
-                    break
+                default: break
                 }
                 
                 if section == 0 {
-                    attributes.frame.origin.y = collectionView.contentOffset.y
+                    attributes.frame.origin.y = collectionView.contentOffset.y + safeAreaTop
+                    
+                    print("@@ y", collectionView.contentOffset.y)
                 }
                 
                 if index == 0 {
