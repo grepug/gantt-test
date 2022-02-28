@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		2A69B6AF27C771E30011E829 /* GanttCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6AE27C771E30011E829 /* GanttCollectionViewLayout.swift */; };
+		2A69B6B127C886EC0011E829 /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6B027C886EC0011E829 /* CalendarModel.swift */; };
+		2A69B6B927CC5FBB0011E829 /* gantt_test_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6B827CC5FBB0011E829 /* gantt_test_Tests.swift */; };
+		2A69B6C027CC822C0011E829 /* GanttChartConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6BF27CC822C0011E829 /* GanttChartConfiguration.swift */; };
+		2A69B6C127CC822C0011E829 /* GanttChartConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6BF27CC822C0011E829 /* GanttChartConfiguration.swift */; };
+		2A69B6C327CCA2580011E829 /* GanttCollectionViewLayout2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6C227CCA2580011E829 /* GanttCollectionViewLayout2.swift */; };
+		2A69B6C427CCA2580011E829 /* GanttCollectionViewLayout2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6C227CCA2580011E829 /* GanttCollectionViewLayout2.swift */; };
+		2A69B6C527CCB1C40011E829 /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6B027C886EC0011E829 /* CalendarModel.swift */; };
+		2A69B6C727CCF3760011E829 /* GanttCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6C627CCF3760011E829 /* GanttCollectionViewController.swift */; };
+		2A69B6C827CCF3760011E829 /* GanttCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6C627CCF3760011E829 /* GanttCollectionViewController.swift */; };
+		2A69B6CB27CD0A620011E829 /* FixedHeaderCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6CA27CD0A620011E829 /* FixedHeaderCellConfiguration.swift */; };
+		2A69B6CC27CD0A620011E829 /* FixedHeaderCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6CA27CD0A620011E829 /* FixedHeaderCellConfiguration.swift */; };
 		2A8E497F27C4AB4400DA5A4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E497E27C4AB4400DA5A4D /* AppDelegate.swift */; };
 		2A8E498127C4AB4400DA5A4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */; };
 		2A8E498327C4AB4400DA5A4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E498227C4AB4400DA5A4D /* ViewController.swift */; };
@@ -16,8 +27,25 @@
 		2A8E498B27C4AB4500DA5A4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A8E498927C4AB4500DA5A4D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2A69B6BA27CC5FBB0011E829 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A8E497327C4AB4400DA5A4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A8E497A27C4AB4400DA5A4D;
+			remoteInfo = "gantt-test";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		2A69B6AE27C771E30011E829 /* GanttCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttCollectionViewLayout.swift; sourceTree = "<group>"; };
+		2A69B6B027C886EC0011E829 /* CalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
+		2A69B6B627CC5FBB0011E829 /* gantt-test Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "gantt-test Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A69B6B827CC5FBB0011E829 /* gantt_test_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gantt_test_Tests.swift; sourceTree = "<group>"; };
+		2A69B6BF27CC822C0011E829 /* GanttChartConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttChartConfiguration.swift; sourceTree = "<group>"; };
+		2A69B6C227CCA2580011E829 /* GanttCollectionViewLayout2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttCollectionViewLayout2.swift; sourceTree = "<group>"; };
+		2A69B6C627CCF3760011E829 /* GanttCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttCollectionViewController.swift; sourceTree = "<group>"; };
+		2A69B6CA27CD0A620011E829 /* FixedHeaderCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedHeaderCellConfiguration.swift; sourceTree = "<group>"; };
 		2A8E497B27C4AB4400DA5A4D /* gantt-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gantt-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A8E497E27C4AB4400DA5A4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,6 +57,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2A69B6B327CC5FBB0011E829 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2A8E497827C4AB4400DA5A4D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -39,10 +74,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A69B6B727CC5FBB0011E829 /* gantt-test Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2A69B6B827CC5FBB0011E829 /* gantt_test_Tests.swift */,
+			);
+			path = "gantt-test Tests";
+			sourceTree = "<group>";
+		};
+		2A69B6C927CD0A4D0011E829 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2A69B6CA27CD0A620011E829 /* FixedHeaderCellConfiguration.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		2A8E497227C4AB4400DA5A4D = {
 			isa = PBXGroup;
 			children = (
 				2A8E497D27C4AB4400DA5A4D /* gantt-test */,
+				2A69B6B727CC5FBB0011E829 /* gantt-test Tests */,
 				2A8E497C27C4AB4400DA5A4D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				2A8E497B27C4AB4400DA5A4D /* gantt-test.app */,
+				2A69B6B627CC5FBB0011E829 /* gantt-test Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -58,6 +111,7 @@
 		2A8E497D27C4AB4400DA5A4D /* gantt-test */ = {
 			isa = PBXGroup;
 			children = (
+				2A69B6C927CD0A4D0011E829 /* Cells */,
 				2A8E497E27C4AB4400DA5A4D /* AppDelegate.swift */,
 				2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */,
 				2A8E498227C4AB4400DA5A4D /* ViewController.swift */,
@@ -66,6 +120,10 @@
 				2A8E498927C4AB4500DA5A4D /* LaunchScreen.storyboard */,
 				2A8E498C27C4AB4500DA5A4D /* Info.plist */,
 				2A69B6AE27C771E30011E829 /* GanttCollectionViewLayout.swift */,
+				2A69B6B027C886EC0011E829 /* CalendarModel.swift */,
+				2A69B6BF27CC822C0011E829 /* GanttChartConfiguration.swift */,
+				2A69B6C227CCA2580011E829 /* GanttCollectionViewLayout2.swift */,
+				2A69B6C627CCF3760011E829 /* GanttCollectionViewController.swift */,
 			);
 			path = "gantt-test";
 			sourceTree = "<group>";
@@ -73,6 +131,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2A69B6B527CC5FBB0011E829 /* gantt-test Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A69B6BC27CC5FBB0011E829 /* Build configuration list for PBXNativeTarget "gantt-test Tests" */;
+			buildPhases = (
+				2A69B6B227CC5FBB0011E829 /* Sources */,
+				2A69B6B327CC5FBB0011E829 /* Frameworks */,
+				2A69B6B427CC5FBB0011E829 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A69B6BB27CC5FBB0011E829 /* PBXTargetDependency */,
+			);
+			name = "gantt-test Tests";
+			productName = "gantt-test Tests";
+			productReference = 2A69B6B627CC5FBB0011E829 /* gantt-test Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		2A8E497A27C4AB4400DA5A4D /* gantt-test */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2A8E498F27C4AB4500DA5A4D /* Build configuration list for PBXNativeTarget "gantt-test" */;
@@ -100,6 +176,10 @@
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					2A69B6B527CC5FBB0011E829 = {
+						CreatedOnToolsVersion = 13.2;
+						TestTargetID = 2A8E497A27C4AB4400DA5A4D;
+					};
 					2A8E497A27C4AB4400DA5A4D = {
 						CreatedOnToolsVersion = 13.2;
 					};
@@ -119,11 +199,19 @@
 			projectRoot = "";
 			targets = (
 				2A8E497A27C4AB4400DA5A4D /* gantt-test */,
+				2A69B6B527CC5FBB0011E829 /* gantt-test Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2A69B6B427CC5FBB0011E829 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2A8E497927C4AB4400DA5A4D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,18 +225,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2A69B6B227CC5FBB0011E829 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A69B6C827CCF3760011E829 /* GanttCollectionViewController.swift in Sources */,
+				2A69B6C127CC822C0011E829 /* GanttChartConfiguration.swift in Sources */,
+				2A69B6C527CCB1C40011E829 /* CalendarModel.swift in Sources */,
+				2A69B6C427CCA2580011E829 /* GanttCollectionViewLayout2.swift in Sources */,
+				2A69B6CC27CD0A620011E829 /* FixedHeaderCellConfiguration.swift in Sources */,
+				2A69B6B927CC5FBB0011E829 /* gantt_test_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2A8E497727C4AB4400DA5A4D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A69B6C027CC822C0011E829 /* GanttChartConfiguration.swift in Sources */,
 				2A8E498327C4AB4400DA5A4D /* ViewController.swift in Sources */,
+				2A69B6B127C886EC0011E829 /* CalendarModel.swift in Sources */,
 				2A69B6AF27C771E30011E829 /* GanttCollectionViewLayout.swift in Sources */,
+				2A69B6C327CCA2580011E829 /* GanttCollectionViewLayout2.swift in Sources */,
 				2A8E497F27C4AB4400DA5A4D /* AppDelegate.swift in Sources */,
 				2A8E498127C4AB4400DA5A4D /* SceneDelegate.swift in Sources */,
+				2A69B6CB27CD0A620011E829 /* FixedHeaderCellConfiguration.swift in Sources */,
+				2A69B6C727CCF3760011E829 /* GanttCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2A69B6BB27CC5FBB0011E829 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A8E497A27C4AB4400DA5A4D /* gantt-test */;
+			targetProxy = 2A69B6BA27CC5FBB0011E829 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2A8E498427C4AB4400DA5A4D /* Main.storyboard */ = {
@@ -170,6 +284,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2A69B6BD27CC5FBB0011E829 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NND5T8LZPS;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kai.test.dev.gantt.gantt-test-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gantt-test.app/gantt-test";
+			};
+			name = Debug;
+		};
+		2A69B6BE27CC5FBB0011E829 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NND5T8LZPS;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kai.test.dev.gantt.gantt-test-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gantt-test.app/gantt-test";
+			};
+			name = Release;
+		};
 		2A8E498D27C4AB4500DA5A4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -345,6 +495,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2A69B6BC27CC5FBB0011E829 /* Build configuration list for PBXNativeTarget "gantt-test Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A69B6BD27CC5FBB0011E829 /* Debug */,
+				2A69B6BE27CC5FBB0011E829 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2A8E497627C4AB4400DA5A4D /* Build configuration list for PBXProject "gantt-test" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

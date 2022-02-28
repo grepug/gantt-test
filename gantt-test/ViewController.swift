@@ -11,6 +11,9 @@ class ViewController: UICollectionViewController {
     let layout = GanttCollectionViewLayout()
     lazy var dividerLayer = CALayer()
     
+    let calendarModel = CalendarModel(startDate: "2022-01-01 00:00:00".toDate()!,
+                                      endDate: "2022-05-01 00:00:00".toDate()!)
+    
     init() {
         super.init(collectionViewLayout: layout)
         layout.delegate = self
@@ -24,14 +27,14 @@ class ViewController: UICollectionViewController {
         super.viewDidLoad()
         
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "hi")
-        view.layer.addSublayer(dividerLayer)
+        collectionView.layer.addSublayer(dividerLayer)
         
         title = "Gantt"
     }
     
     func configDividerLayer(height: CGFloat) {
-        dividerLayer.frame = CGRect(x: 60, y: safeAreaTop(), width: 2, height: height)
-        dividerLayer.backgroundColor = UIColor.green.cgColor
+        dividerLayer.frame = CGRect(x: 60, y: safeAreaTop(), width: 4, height: height)
+        dividerLayer.backgroundColor = UIColor.systemGray4.cgColor
     }
 }
 
@@ -42,11 +45,11 @@ extension ViewController: GanttCollectionViewLayoutDelegate {
             return .init(width: 60, height: 50)
         }
         
-        return .init(width: 100, height: 50)
+        return .init(width: 140, height: 50)
     }
     
     func numberOfColumns() -> Int {
-        400
+        calendarModel.calendarItems().count
     }
     
     func safeAreaTop() -> CGFloat {
@@ -60,15 +63,16 @@ extension ViewController: GanttCollectionViewLayoutDelegate {
 
 extension ViewController {
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        20
+        40
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        400
+        calendarModel.calendarItems().count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hi", for: indexPath)
+        let calendarItem = calendarModel.calendarItems()[indexPath.item]
         
         var config = UIListContentConfiguration.cell()
         config.text = "1"
@@ -83,39 +87,16 @@ extension ViewController {
             if indexPath.row == 0 {
                 config.text = "Date"
             } else {
-                config.text = "Section"
+                config.text = calendarItem.date.formatted(date: .numeric,
+                                                          time: .omitted)
             }
         } else {
             if indexPath.row == 0 {
                 config.text = String(indexPath.section)
             } else {
-                config.text = "Content"
+                config.text = ""
             }
         }
-        
-        
-//        if !(indexPath.item == 0 && indexPath.section == 0) {
-//            if indexPath.item == 0 {
-//                cell.addRightBorder(with: .lightGray, andWidth: 2)
-//            } else {
-//                cell.subviews.forEach {
-//                    if $0.tag == 1 {
-//                        $0.removeFromSuperview()
-//                    }
-//                }
-//            }
-//
-//            if indexPath.section == 0 {
-//                cell.addBottomBorder(with: .lightGray, andWidth: 2)
-//            } else {
-//                cell.subviews.forEach {
-//                    if $0.tag == 2 {
-//                        $0.removeFromSuperview()
-//                    }
-//                }
-//            }
-//        }
-        cell.addTopAndBottomBorders()
         
         cell.contentConfiguration = config
         

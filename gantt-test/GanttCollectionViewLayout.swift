@@ -130,8 +130,6 @@ private extension GanttCollectionViewLayout {
                 
                 if section == 0 {
                     attributes.frame.origin.y = collectionView.contentOffset.y + safeAreaTop
-                    
-                    print("@@ y", collectionView.contentOffset.y)
                 }
                 
                 if index == 0 {
