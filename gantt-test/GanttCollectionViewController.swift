@@ -18,9 +18,17 @@ class GanttCollectionViewController: UICollectionViewController {
         let date3 = "2022-02-05 12:00:00".toDate()!
         let date4 = "2022-04-28 13:00:00".toDate()!
         
+        let date5 = "2022-01-20 12:00:00".toDate()!
+        let date6 = "2022-03-05 13:00:00".toDate()!
+        
+        let date7 = "2021-12-05 12:00:00".toDate()!
+        let date8 = "2022-04-28 13:00:00".toDate()!
+        
         let config = GanttChartConfiguration(items: [
             .init(startDate: date1, endDate: date2, title: "第一个目标", progress: 0, color: .systemRed),
             .init(startDate: date3, endDate: date4, title: "健康身体棒", progress: 0, color: .systemGreen),
+            .init(startDate: date5, endDate: date6, title: "健康身体棒", progress: 0, color: .systemBlue),
+            .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0, color: .systemPink),
         ], leadingCompensatedMonths: 2, trailingCompensatedMonths: 2)
         
         let layout = GanttCollectionViewLayout2(config: config)
@@ -85,5 +93,20 @@ extension GanttCollectionViewController {
         cell.contentConfiguration = config
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let cellType = chartConfig.cellType(at: indexPath)
+        
+        guard cellType == .itemCell else { return nil }
+        
+        return .init(identifier: indexPath as NSCopying,
+                     previewProvider: nil) { _ in
+                .init(children: [
+                    UIAction(title: "编辑", image: .init(systemName: "pencil"), handler: { _ in
+                        
+                    })
+                ])
+        }
     }
 }
