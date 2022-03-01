@@ -50,8 +50,13 @@ class GanttCollectionViewController: UICollectionViewController {
         title = "Gantt Chart"
         
         for kind in GanttChartCellType.allCases {
-            collectionView.register(UICollectionViewCell.self,
-                                    forCellWithReuseIdentifier: kind.rawValue)
+            if kind == .itemCell {
+                collectionView.register(GanttChartItemCell.self,
+                                        forCellWithReuseIdentifier: kind.rawValue)
+            } else {
+                collectionView.register(UICollectionViewCell.self,
+                                        forCellWithReuseIdentifier: kind.rawValue)
+            }
         }
         
         collectionView.reloadData()
@@ -99,13 +104,11 @@ extension GanttCollectionViewController {
         
         switch cellType {
         case .itemCell:
+            let cell = cell as! GanttChartItemCell
             let item = chartConfig.chartItem(at: indexPath)
-            cell.backgroundColor = item.color
-            cell.layer.cornerRadius = 12
-            var config = UIListContentConfiguration.cell()
-            config.text = item.title
-            config.textProperties.color = .white
-            cell.contentConfiguration = config
+            
+            cell.applyConfiguration(title: item.title,
+                                    bgColor: item.color)
         case .fixedHeaderCell:
             cell.contentConfiguration = chartConfig.fixedHeaderTopCellConfiguration(at: indexPath)
         case .bgCell, .fixedColumnCell:

@@ -8,6 +8,8 @@
 import UIKit
 
 class GanttCollectionViewLayout2: UICollectionViewLayout {
+    typealias Attributes = GanttChartCollectionViewLayoutAttributes
+    
     var config: GanttChartConfiguration {
         didSet {
             shouldPrepare = true
@@ -24,7 +26,8 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var attributesArr: [[UICollectionViewLayoutAttributes]] = []
+    var cachedAttributesArr: [[Attributes]] = []
+    var cachedFrames: [[CGRect]] = []
     
     override var collectionViewContentSize: CGSize {
         config.collectionViewContentSize
@@ -38,14 +41,16 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
         guard shouldPrepare else { return }
         
         shouldPrepare = false
-        attributesArr.removeAll()
+        cachedAttributesArr.removeAll()
+        cachedFrames.removeAll()
         
         for section in 0..<collectionView.numberOfSections {
-            var sectionArributes: [UICollectionViewLayoutAttributes] = []
+            var sectionArributes: [Attributes] = []
+            var sectionFrames: [CGRect] = []
             
             for item in 0..<collectionView.numberOfItems(inSection: section) {
                 let indexPath = IndexPath(item: item, section: section)
-                let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+                let attributes = Attributes(forCellWith: indexPath)
                 let frame = config.cellFrame(at: indexPath)
                 let cellType = config.cellType(at: indexPath)
                 
@@ -61,14 +66,18 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
                 }
                 
                 sectionArributes.append(attributes)
+                sectionFrames.append(frame)
             }
             
-            attributesArr.append(sectionArributes)
+            cachedAttributesArr.append(sectionArributes)
+            cachedFrames.append(sectionFrames)
         }
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        attributesArr[indexPath.section][indexPath.item]
+        
+        print("layout")
+        return cachedAttributesArr[indexPath.section][indexPath.item]
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
@@ -78,10 +87,30 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
         
         for section in 0..<collectionView.numberOfSections {
             for item in 0..<collectionView.numberOfItems(inSection: section) {
-                if let attributes = layoutAttributesForItem(at: .init(item: item, section: section)) {
-                    if attributes.frame.intersects(rect) {
-                        attributesArr.append(attributes)
+                let indexPath = IndexPath(item: item, section: section)
+                let attributes = cachedAttributesArr[indexPath.section][indexPath.item]
+                let frame = cachedFrames[indexPath.section][indexPath.item]
+                let collectionViewOffsetX = collectionView.contentOffset.x
+                
+                if frame.intersects(rect) {
+                    if config.cellType(at: indexPath) == .itemCell {
+                        if frame.origin.x <= collectionViewOffsetX {
+                            let translationX = collectionViewOffsetX - frame.origin.x
+                            let width = frame.width - translationX
+                            let newFrame = CGRect(x: collectionViewOffsetX,
+                                                  y: frame.origin.y,
+                                                  width: width,
+                                                  height: frame.height)
+                            
+                            attributes.frame = newFrame
+                            attributes.isOffsetXLessThanCollectionView = true
+                        } else {
+                            attributes.frame = frame
+                            attributes.isOffsetXLessThanCollectionView = false
+                        }
                     }
+                    
+                    attributesArr.append(attributes)
                 }
             }
         }
