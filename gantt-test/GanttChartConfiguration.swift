@@ -36,6 +36,8 @@ struct GanttChartConfiguration {
     var chartStartDate: Date
     var chartEndDate: Date
     
+    private var bgCells: [GanttBgCell] = []
+    
     init(items: [GanttChartItem]) {
         let startDate = items.map(\.startDate).min()!
         let endDate = items.map(\.endDate).max()!
@@ -43,6 +45,10 @@ struct GanttChartConfiguration {
         self.chartStartDate = Self.getChartStartDate(date: startDate, in: headerStyle)
         self.chartEndDate = Self.getCharEndDate(date: endDate)
         self.items = items
+        self.bgCells = Self.bgCells(startDate: chartStartDate,
+                                    endDate: chartEndDate,
+                                    widthPerDay: widthPerDay,
+                                    in: headerStyle)
     }
 }
 
@@ -79,6 +85,30 @@ private extension GanttChartConfiguration {
         }
         
         return date
+    }
+    
+    static func bgCells(startDate: Date,
+                        endDate: Date,
+                        widthPerDay: CGFloat,
+                        in style: GanttCalendarHeaderStyle) -> [GanttBgCell] {
+        var date = startDate
+        var cells: [GanttBgCell] = []
+        
+        while date < endDate {
+            let days = date.daysInMonth()
+            let width = CGFloat(days) * widthPerDay
+            
+            cells.append(.init(width: width, dateOfStart: date))
+            
+            switch style {
+            case .monthsAndDays:
+                date = Calendar.current.date(byAdding: .month, value: 1, to: date)!
+            case .weeksAndDays:
+                date = Calendar.current.date(byAdding: .day, value: 7, to: date)!
+            }
+        }
+        
+        return cells
     }
 }
 
@@ -262,27 +292,6 @@ private extension GanttChartConfiguration {
     
     var numberOfDays: Int {
         Date.days(from: chartStartDate, to: chartEndDate)
-    }
-    
-    var bgCells: [GanttBgCell] {
-        var date = chartStartDate
-        var cells: [GanttBgCell] = []
-        
-        while date < chartEndDate {
-            let days = date.daysInMonth()
-            let width = CGFloat(days) * widthPerDay
-            
-            cells.append(.init(width: width, dateOfStart: date))
-            
-            switch headerStyle {
-            case .monthsAndDays:
-                date = Calendar.current.date(byAdding: .month, value: 1, to: date)!
-            case .weeksAndDays:
-                date = Calendar.current.date(byAdding: .day, value: 7, to: date)!
-            }
-        }
-        
-        return cells
     }
     
     var dayCells: [GanttHeaderDayCell] {
