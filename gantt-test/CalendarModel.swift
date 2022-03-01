@@ -70,10 +70,32 @@ public extension Date {
     }
     
     func endOfMonth() -> Date {
-            return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
-        }
+        Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth())!
+    }
+    
+    static let daysInMonths: [Int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         
     func daysInMonth() -> Int {
-        Date.days(from: startOfMonth(), to: endOfMonth())
+        let components = Calendar.current.dateComponents([.month, .year], from: self)
+        let year = components.year!
+        let month = components.month!
+        
+        if month == 2 && isLeapYear(of: year) {
+            return 29
+        }
+        
+        return Self.daysInMonths[month - 1]
+    }
+    
+    func isLeapYear(of year: Int) -> Bool {
+        if year % 4 != 0 {
+            return false
+        }
+        
+        if year % 100 == 0 {
+            return year % 400 == 0
+        }
+        
+        return true
     }
 }
