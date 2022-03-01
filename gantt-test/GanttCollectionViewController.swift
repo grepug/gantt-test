@@ -63,7 +63,16 @@ class GanttCollectionViewController: UICollectionViewController {
         })
         chartStyleBarItem.title = chartConfig.headerStyle.text
         
-        navigationItem.rightBarButtonItems = [chartStyleBarItem]
+        let backToTodayButton = UIBarButtonItem(title: "回到今天", primaryAction: .init { [weak self] _ in
+            guard let self = self else { return }
+            
+            let navTop = self.navigationController!.navigationBar.frame.maxY
+            let point = self.chartConfig.todayPoint(in: self.collectionView.bounds,
+                                                    y: -navTop)
+            self.collectionView.setContentOffset(point, animated: true)
+        })
+        
+        navigationItem.rightBarButtonItems = [chartStyleBarItem, backToTodayButton]
     }
     
     func changeChartStyle(to style: GanttCalendarHeaderStyle) {

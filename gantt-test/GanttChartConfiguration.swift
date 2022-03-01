@@ -136,6 +136,13 @@ extension GanttChartConfiguration {
         return .init(width: width, height: height)
     }
     
+    func todayPoint(in frame: CGRect, y: CGFloat = 0) -> CGPoint {
+        let beforeDays = Date.days(from: chartStartDate, to: currentDate) - 1
+        let x = CGFloat(beforeDays) * widthPerDay + fixedColumnWidth - frame.width / 2
+        
+        return .init(x: x, y: y)
+    }
+    
     func fixedHeaderTopCellConfiguration(at indexPath: IndexPath) -> UIContentConfiguration {
         let date = bgCell(at: indexPath).dateOfStart
         var config = UIListContentConfiguration.cell()
