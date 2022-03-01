@@ -19,7 +19,7 @@ struct GanttChartConfiguration {
     var fixedColumnWidth: CGFloat = 100
     var bgCellHeight: CGFloat = 60
     var itemHeight: CGFloat = 40
-    var widthPerDay: CGFloat = 10
+    var widthPerDay: CGFloat = 22
     
     var leadingCompensatedMonths = 1
     var trailingCompensatedMonths = 1
@@ -102,6 +102,10 @@ extension GanttChartConfiguration {
     
     func chartItem(at indexPath: IndexPath) -> GanttChartItem {
         items[indexPath.section - 1]
+    }
+    
+    func bgCell(at indexPath: IndexPath) -> GanttBgCell {
+        bgCells[indexPath.item - 1]
     }
     
     func cellType(at indexPath: IndexPath) -> GanttChartCellType {
@@ -214,6 +218,8 @@ private extension GanttChartConfiguration {
         while date < chartEndDate {
             let days = date.daysInMonth()
             let width = CGFloat(days) * widthPerDay
+            
+            print("date", date)
             
             cells.append(.init(width: width, dateOfStart: date))
             

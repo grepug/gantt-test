@@ -29,7 +29,7 @@ class GanttCollectionViewController: UICollectionViewController {
             .init(startDate: date3, endDate: date4, title: "健康身体棒", progress: 0, color: .systemGreen),
             .init(startDate: date5, endDate: date6, title: "健康身体棒", progress: 0, color: .systemBlue),
             .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0, color: .systemPink),
-        ], leadingCompensatedMonths: 2, trailingCompensatedMonths: 2)
+        ], leadingCompensatedMonths: 1, trailingCompensatedMonths: 1)
         
         let layout = GanttCollectionViewLayout2(config: config)
         
@@ -71,26 +71,21 @@ extension GanttCollectionViewController {
         let kind = cellType.rawValue
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kind, for: indexPath)
         
-        var config = UIListContentConfiguration.cell()
-        config.text = kind
-        
-        if cellType == .itemCell {
+        switch cellType {
+        case .itemCell:
             let item = chartConfig.chartItem(at: indexPath)
-            
             cell.backgroundColor = item.color
             cell.layer.cornerRadius = 12
+            var config = UIListContentConfiguration.cell()
             config.text = item.title
-        } else {
-            cell.layer.cornerRadius = 0
-            
-            if indexPath.section % 2 != 0 {
-                cell.backgroundColor = UIColor(white: 242/255, alpha: 1)
-            } else {
-                cell.backgroundColor = .white
-            }
+            cell.contentConfiguration = config
+        case .fixedHeaderCell:
+            let config = FixedHeaderCellConfiguration(date: chartConfig.bgCell(at: indexPath).dateOfStart)
+            cell.contentConfiguration = config
+        case .bgCell, .fixedColumnCell:
+            cell.contentConfiguration = BgCellConfiguration(index: indexPath.section)
+        default: break
         }
-        
-        cell.contentConfiguration = config
         
         return cell
     }
