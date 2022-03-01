@@ -58,7 +58,8 @@ enum GanttChartCellType: String, CaseIterable {
          fixedHeaderCell,
          fixedColumnCell,
          bgCell,
-         itemCell
+         itemCell,
+         todayVerticalLine
 }
 
 enum GattCharSection {
@@ -86,11 +87,7 @@ struct GanttBgCell {
 
 extension GanttChartConfiguration {
     func collectionViewNumberOfItem(in section: Int) -> Int {
-        if section == 0 {
-            return bgCells.count + 1
-        }
-        
-        return bgCells.count + 2
+        bgCells.count + 2
     }
     
     var collectionViewContentSize: CGSize {
@@ -114,6 +111,10 @@ extension GanttChartConfiguration {
         }
         
         if indexPath.section == 0 {
+            if indexPath.item == bgCells.count + 1 {
+                return .todayVerticalLine
+            }
+            
             return .fixedHeaderCell
         }
         
@@ -142,6 +143,17 @@ extension GanttChartConfiguration {
         }
         
         if section == 0 {
+            if indexPath.item == bgCells.count + 1 {
+                let beforeDays = Date.days(from: chartStartDate, to: currentDate) - 1
+                let lineWidth: CGFloat = 3
+                let x = CGFloat(beforeDays) * widthPerDay + fixedColumnWidth
+                
+                return .init(x: x + (widthPerDay / 2) - lineWidth,
+                             y: fixedHeaderHeight,
+                             width: lineWidth,
+                             height: collectionViewContentSize.height - fixedHeaderHeight)
+            }
+            
             return .init(x: fixedColumnWidth + calculateLeadingBgCellWidth(at: normalizedItem),
                          y: 0,
                          width: bgCellWidth(at: normalizedItem),

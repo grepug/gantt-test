@@ -43,9 +43,12 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
                 
                 attributes.frame = frame
                 
-                if cellType == .itemCell {
+                switch cellType {
+                case .todayVerticalLine:
+                    attributes.zIndex = 11
+                case .itemCell:
                     attributes.zIndex = 10
-                } else {
+                default:
                     attributes.zIndex = 9
                 }
                 

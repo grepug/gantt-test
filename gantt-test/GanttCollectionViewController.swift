@@ -25,10 +25,10 @@ class GanttCollectionViewController: UICollectionViewController {
         let date8 = "2022-04-28 13:00:00".toDate()!
         
         let config = GanttChartConfiguration(items: [
-            .init(startDate: date1, endDate: date2, title: "第一个目标", progress: 0, color: .systemRed),
+            .init(startDate: date1, endDate: date2, title: "第一个目标", progress: 0, color: .systemMint),
             .init(startDate: date3, endDate: date4, title: "健康身体棒", progress: 0, color: .systemGreen),
             .init(startDate: date5, endDate: date6, title: "健康身体棒", progress: 0, color: .systemBlue),
-            .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0, color: .systemPink),
+            .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0, color: .systemPurple),
         ], leadingCompensatedMonths: 1, trailingCompensatedMonths: 1)
         
         let layout = GanttCollectionViewLayout2(config: config)
@@ -84,6 +84,8 @@ extension GanttCollectionViewController {
             cell.contentConfiguration = config
         case .bgCell, .fixedColumnCell:
             cell.contentConfiguration = BgCellConfiguration(index: indexPath.section)
+        case .todayVerticalLine:
+            cell.backgroundColor = .systemRed.withAlphaComponent(0.8)
         default: break
         }
         
