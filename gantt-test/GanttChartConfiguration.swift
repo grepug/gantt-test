@@ -67,8 +67,15 @@ struct GanttChartConfiguration {
     }
 }
 
-enum GanttCalendarHeaderStyle {
+enum GanttCalendarHeaderStyle: CaseIterable {
     case weeksAndDays, monthsAndDays
+    
+    var text: String {
+        switch self {
+        case .weeksAndDays: return "周视图"
+        case .monthsAndDays: return "月视图"
+        }
+    }
 }
 
 enum GanttChartCellType: String, CaseIterable {

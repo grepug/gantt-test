@@ -8,7 +8,12 @@
 import UIKit
 
 class GanttCollectionViewLayout2: UICollectionViewLayout {
-    var config: GanttChartConfiguration
+    var config: GanttChartConfiguration {
+        didSet {
+            shouldPrepare = true
+        }
+    }
+    var shouldPrepare = true
     
     init(config: GanttChartConfiguration) {
         self.config = config
@@ -30,7 +35,10 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
             return
         }
         
-        guard attributesArr.count != collectionView.numberOfSections else { return }
+        guard shouldPrepare else { return }
+        
+        shouldPrepare = false
+        attributesArr.removeAll()
         
         for section in 0..<collectionView.numberOfSections {
             var sectionArributes: [UICollectionViewLayoutAttributes] = []

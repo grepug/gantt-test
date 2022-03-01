@@ -10,6 +10,7 @@ import UIKit
 class GanttCollectionViewController: UICollectionViewController {
     var chartConfig: GanttChartConfiguration
     var layout: GanttCollectionViewLayout2
+    let chartStyleBarItem: UIBarButtonItem = .init(title: "")
     
     init() {
         let date1 = "2022-01-01 12:00:00".toDate()!
@@ -35,7 +36,7 @@ class GanttCollectionViewController: UICollectionViewController {
         
         self.layout = layout
         self.chartConfig = config
-        
+
         super.init(collectionViewLayout: layout)
     }
     
@@ -53,6 +54,22 @@ class GanttCollectionViewController: UICollectionViewController {
                                     forCellWithReuseIdentifier: kind.rawValue)
         }
         
+        collectionView.reloadData()
+        
+        chartStyleBarItem.menu = UIMenu(children: GanttCalendarHeaderStyle.allCases.map { style in
+            UIAction(title: style.text) { [weak self] _ in
+                self?.changeChartStyle(to: style)
+            }
+        })
+        chartStyleBarItem.title = chartConfig.headerStyle.text
+        
+        navigationItem.rightBarButtonItems = [chartStyleBarItem]
+    }
+    
+    func changeChartStyle(to style: GanttCalendarHeaderStyle) {
+        chartConfig.headerStyle = style
+        chartStyleBarItem.title = style.text
+        layout.config = chartConfig
         collectionView.reloadData()
     }
 }
