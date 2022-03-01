@@ -30,7 +30,7 @@ class GanttCollectionViewController: UICollectionViewController {
             .init(startDate: date3, endDate: date4, title: "健康身体棒", progress: 0, color: .systemGreen),
             .init(startDate: date5, endDate: date6, title: "健康身体棒", progress: 0, color: .systemBlue),
             .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0, color: .systemPurple),
-        ], leadingCompensatedMonths: 0, trailingCompensatedMonths: 0)
+        ])
         
         let layout = GanttCollectionViewLayout2(config: config)
         

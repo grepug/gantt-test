@@ -11,7 +11,7 @@ struct GanttChartConfiguration {
     var headerStyle: GanttCalendarHeaderStyle = .weeksAndDays
     var currentDate: Date = Date()
     var cycles: [GanttChartCycle] = []
-    var items: [GanttChartItem] = []
+    var items: [GanttChartItem]
     
     var showingLeadingFixedColumn = true
     
@@ -22,8 +22,8 @@ struct GanttChartConfiguration {
     var widthPerDay: CGFloat = 30
     var extraWidthPerDay: CGFloat = 0
     
-    var leadingCompensatedMonths = 1
-    var trailingCompensatedMonths = 1
+    var leadingCompensatedMonths = 0
+    var trailingCompensatedMonths = 0
     
     var startDate: Date {
         items.map(\.startDate).min()!
@@ -33,28 +33,43 @@ struct GanttChartConfiguration {
         items.map(\.endDate).max()!
     }
     
-    var chartStartDate: Date {
-        let startOfMonth = startDate.startOfMonth()
+    var chartStartDate: Date
+    var chartEndDate: Date
+    
+    init(items: [GanttChartItem]) {
+        let startDate = items.map(\.startDate).min()!
+        let endDate = items.map(\.endDate).max()!
         
-        switch headerStyle {
+        self.chartStartDate = Self.getChartStartDate(date: startDate, in: headerStyle)
+        self.chartEndDate = Self.getCharEndDate(date: endDate)
+        self.items = items
+    }
+}
+
+private extension GanttChartConfiguration {
+    static func getChartStartDate(date: Date,
+                                  in style: GanttCalendarHeaderStyle) -> Date {
+        let startOfMonth = date.startOfMonth()
+        
+        switch style {
         case .weeksAndDays:
-            return firstWeekDay(of: startOfMonth)
+            return Self.firstWeekDay(of: startOfMonth)
         case .monthsAndDays:
             return Calendar.current.date(byAdding: .month,
-                                         value: -leadingCompensatedMonths,
+                                         value: 0,
                                          to: startOfMonth)!
         }
     }
     
-    var chartEndDate: Date {
+    static func getCharEndDate(date: Date) -> Date {
         let dateOfTrailingMonth = Calendar.current.date(byAdding: .month,
-                                                        value: trailingCompensatedMonths,
-                                                        to: endDate)!
+                                                        value: 0,
+                                                        to: date)!
 
         return dateOfTrailingMonth.endOfMonth()
     }
     
-    func firstWeekDay(of date: Date) -> Date {
+    static func firstWeekDay(of date: Date) -> Date {
         var date = date
         var day = Calendar.current.dateComponents([.weekday], from: date).weekday!
         
@@ -64,59 +79,6 @@ struct GanttChartConfiguration {
         }
         
         return date
-    }
-}
-
-enum GanttCalendarHeaderStyle: CaseIterable {
-    case weeksAndDays, monthsAndDays
-    
-    var text: String {
-        switch self {
-        case .weeksAndDays: return "周视图"
-        case .monthsAndDays: return "月视图"
-        }
-    }
-}
-
-enum GanttChartCellType: String, CaseIterable {
-    case fixedFirstCell,
-         fixedHeaderCell,
-         fixedHeaderDayCell,
-         fixedColumnCell,
-         bgCell,
-         itemCell,
-         todayVerticalLine
-}
-
-enum GattCharSection {
-    case fixedHeader, content
-}
-
-struct GanttChartCycle {
-    var startDate: Date
-    var endDate: Date
-}
-
-struct GanttChartItem: Identifiable {
-    var id = UUID()
-    var startDate: Date
-    var endDate: Date
-    var title: String
-    var progress: Double
-    var color: UIColor
-}
-
-struct GanttBgCell {
-    var width: CGFloat
-    var dateOfStart: Date
-}
-
-struct GanttHeaderDayCell {
-    var x: CGFloat
-    var date: Date
-    
-    var day: Int {
-        Calendar.current.dateComponents([.day], from: date).day!
     }
 }
 

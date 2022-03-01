@@ -23,6 +23,8 @@
 		2A69B6CF27CDC3B70011E829 /* BgCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6CD27CDC3B70011E829 /* BgCellConfiguration.swift */; };
 		2A69B6D127CE106C0011E829 /* GanttChartItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6D027CE106C0011E829 /* GanttChartItemCell.swift */; };
 		2A69B6D227CE106C0011E829 /* GanttChartItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6D027CE106C0011E829 /* GanttChartItemCell.swift */; };
+		2A69B6D427CE45500011E829 /* GanttChartTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6D327CE45500011E829 /* GanttChartTypes.swift */; };
+		2A69B6D527CE45500011E829 /* GanttChartTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6D327CE45500011E829 /* GanttChartTypes.swift */; };
 		2A8E497F27C4AB4400DA5A4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E497E27C4AB4400DA5A4D /* AppDelegate.swift */; };
 		2A8E498127C4AB4400DA5A4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */; };
 		2A8E498327C4AB4400DA5A4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E498227C4AB4400DA5A4D /* ViewController.swift */; };
@@ -52,6 +54,7 @@
 		2A69B6CA27CD0A620011E829 /* FixedHeaderCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedHeaderCellConfiguration.swift; sourceTree = "<group>"; };
 		2A69B6CD27CDC3B70011E829 /* BgCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BgCellConfiguration.swift; sourceTree = "<group>"; };
 		2A69B6D027CE106C0011E829 /* GanttChartItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttChartItemCell.swift; sourceTree = "<group>"; };
+		2A69B6D327CE45500011E829 /* GanttChartTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttChartTypes.swift; sourceTree = "<group>"; };
 		2A8E497B27C4AB4400DA5A4D /* gantt-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gantt-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A8E497E27C4AB4400DA5A4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +135,7 @@
 				2A69B6BF27CC822C0011E829 /* GanttChartConfiguration.swift */,
 				2A69B6C227CCA2580011E829 /* GanttCollectionViewLayout2.swift */,
 				2A69B6C627CCF3760011E829 /* GanttCollectionViewController.swift */,
+				2A69B6D327CE45500011E829 /* GanttChartTypes.swift */,
 			);
 			path = "gantt-test";
 			sourceTree = "<group>";
@@ -240,6 +244,7 @@
 				2A69B6C827CCF3760011E829 /* GanttCollectionViewController.swift in Sources */,
 				2A69B6CF27CDC3B70011E829 /* BgCellConfiguration.swift in Sources */,
 				2A69B6D227CE106C0011E829 /* GanttChartItemCell.swift in Sources */,
+				2A69B6D527CE45500011E829 /* GanttChartTypes.swift in Sources */,
 				2A69B6C127CC822C0011E829 /* GanttChartConfiguration.swift in Sources */,
 				2A69B6C527CCB1C40011E829 /* CalendarModel.swift in Sources */,
 				2A69B6C427CCA2580011E829 /* GanttCollectionViewLayout2.swift in Sources */,
@@ -261,6 +266,7 @@
 				2A69B6D127CE106C0011E829 /* GanttChartItemCell.swift in Sources */,
 				2A8E498127C4AB4400DA5A4D /* SceneDelegate.swift in Sources */,
 				2A69B6CB27CD0A620011E829 /* FixedHeaderCellConfiguration.swift in Sources */,
+				2A69B6D427CE45500011E829 /* GanttChartTypes.swift in Sources */,
 				2A69B6C727CCF3760011E829 /* GanttCollectionViewController.swift in Sources */,
 				2A69B6CE27CDC3B70011E829 /* BgCellConfiguration.swift in Sources */,
 			);
