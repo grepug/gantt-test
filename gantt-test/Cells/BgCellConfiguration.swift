@@ -55,7 +55,7 @@ extension BgCellConfiguration {
 
 extension BgCellConfiguration.View {
     func setupViews(config: Config) {
-        borderLayer.backgroundColor = UIColor.separator.cgColor
+        borderLayer.backgroundColor = UIColor.systemGray5.cgColor
         layer.addSublayer(borderLayer)
     }
     

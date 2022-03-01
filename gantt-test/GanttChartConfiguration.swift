@@ -19,7 +19,8 @@ struct GanttChartConfiguration {
     var fixedColumnWidth: CGFloat = 100
     var bgCellHeight: CGFloat = 60
     var itemHeight: CGFloat = 40
-    var widthPerDay: CGFloat = 22
+    var widthPerDay: CGFloat = 8
+    var extraWidthPerDay: CGFloat = 4
     
     var leadingCompensatedMonths = 1
     var trailingCompensatedMonths = 1
@@ -56,6 +57,7 @@ enum GanttCalendarHeaderStyle {
 enum GanttChartCellType: String, CaseIterable {
     case fixedFirstCell,
          fixedHeaderCell,
+         fixedHeaderDayCell,
          fixedColumnCell,
          bgCell,
          itemCell,
@@ -85,9 +87,22 @@ struct GanttBgCell {
     var dateOfStart: Date
 }
 
+struct GanttHeaderDayCell {
+    var x: CGFloat
+    var date: Date
+    
+    var day: Int {
+        Calendar.current.dateComponents([.day], from: date).day!
+    }
+}
+
 extension GanttChartConfiguration {
     func collectionViewNumberOfItem(in section: Int) -> Int {
-        bgCells.count + 2
+        if section == 1 {
+            return dayCells.count
+        }
+        
+        return bgCells.count + 2
     }
     
     var collectionViewContentSize: CGSize {
@@ -98,11 +113,15 @@ extension GanttChartConfiguration {
     }
     
     func chartItem(at indexPath: IndexPath) -> GanttChartItem {
-        items[indexPath.section - 1]
+        items[indexPath.section - 2]
     }
     
     func bgCell(at indexPath: IndexPath) -> GanttBgCell {
         bgCells[indexPath.item - 1]
+    }
+    
+    func dayCell(at indexPath: IndexPath) -> GanttHeaderDayCell {
+        dayCells[indexPath.item]
     }
     
     func cellType(at indexPath: IndexPath) -> GanttChartCellType {
@@ -116,6 +135,10 @@ extension GanttChartConfiguration {
             }
             
             return .fixedHeaderCell
+        }
+        
+        if indexPath.section == 1 {
+            return .fixedHeaderDayCell
         }
         
         if indexPath.item == 0 {
@@ -132,49 +155,51 @@ extension GanttChartConfiguration {
     func cellFrame(at indexPath: IndexPath) -> CGRect {
         let section = indexPath.section
         let item = indexPath.item
-        let normalizedSection = section - 1
+        let normalizedSection = section - 2
         let normalizedItem = item - (showingLeadingFixedColumn ? 1 : 0)
+        let cellType = cellType(at: indexPath)
         
-        if section == 0 && item == 0 {
+        switch cellType {
+        case .fixedFirstCell:
             return .init(x: 0,
                          y: 0,
                          width: fixedColumnWidth,
                          height: fixedHeaderHeight)
-        }
-        
-        if section == 0 {
-            if indexPath.item == bgCells.count + 1 {
-                let beforeDays = Date.days(from: chartStartDate, to: currentDate) - 1
-                let lineWidth: CGFloat = 3
-                let x = CGFloat(beforeDays) * widthPerDay + fixedColumnWidth
-                
-                return .init(x: x + (widthPerDay / 2) - lineWidth,
-                             y: fixedHeaderHeight,
-                             width: lineWidth,
-                             height: collectionViewContentSize.height - fixedHeaderHeight)
-            }
+        case .fixedHeaderCell:
+            return .init(x: fixedColumnWidth + calculateLeadingBgCellWidth(at: normalizedItem),
+                         y: 0,
+                         width: bgCellWidth(at: normalizedItem),
+                         height: fixedHeaderHeight / 2)
+        case .fixedHeaderDayCell:
+            let dayCell = dayCells[item]
+            let width = widthPerDay + extraWidthPerDay
             
-            return .init(x: fixedColumnWidth + calculateLeadingBgCellWidth(at: normalizedItem),
-                         y: 0,
-                         width: bgCellWidth(at: normalizedItem),
-                         height: fixedHeaderHeight)
-        }
-        
-        if item == 0 {
+            return .init(x: fixedColumnWidth + dayCell.x - extraWidthPerDay / 2,
+                         y: fixedHeaderHeight / 2,
+                         width: width,
+                         height: fixedHeaderHeight / 2)
+        case .fixedColumnCell:
             return .init(x: 0,
                          y: bgCellOffsetY(inSection: normalizedSection),
                          width: fixedColumnWidth,
                          height: bgCellHeight)
-        }
-        
-        if normalizedItem < bgCells.count {
+        case .bgCell:
             return .init(x: fixedColumnWidth + calculateLeadingBgCellWidth(at: normalizedItem),
                          y: bgCellOffsetY(inSection: normalizedSection),
                          width: bgCellWidth(at: normalizedItem),
                          height: bgCellHeight)
+        case .itemCell:
+            return itemFrame(inSection: normalizedSection)
+        case .todayVerticalLine:
+            let beforeDays = Date.days(from: chartStartDate, to: currentDate) - 1
+            let lineWidth: CGFloat = 3
+            let x = CGFloat(beforeDays) * widthPerDay + fixedColumnWidth
+            
+            return .init(x: x + (widthPerDay / 2) - lineWidth,
+                         y: fixedHeaderHeight,
+                         width: lineWidth,
+                         height: collectionViewContentSize.height - fixedHeaderHeight)
         }
-        
-        return itemFrame(inSection: normalizedSection)
     }
     
 }
@@ -231,11 +256,24 @@ private extension GanttChartConfiguration {
             let days = date.daysInMonth()
             let width = CGFloat(days) * widthPerDay
             
-            print("date", date)
-            
             cells.append(.init(width: width, dateOfStart: date))
             
             date = Calendar.current.date(byAdding: .month, value: 1, to: date)!
+        }
+        
+        return cells
+    }
+    
+    var dayCells: [GanttHeaderDayCell] {
+        var date = chartStartDate
+        var cells: [GanttHeaderDayCell] = []
+        var x: CGFloat = 0
+        
+        while date < chartEndDate {
+            cells.append(.init(x: x, date: date))
+            
+            date = Calendar.current.date(byAdding: .day, value: 7, to: date)!
+            x += widthPerDay * 7
         }
         
         return cells

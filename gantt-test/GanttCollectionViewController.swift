@@ -29,7 +29,7 @@ class GanttCollectionViewController: UICollectionViewController {
             .init(startDate: date3, endDate: date4, title: "健康身体棒", progress: 0, color: .systemGreen),
             .init(startDate: date5, endDate: date6, title: "健康身体棒", progress: 0, color: .systemBlue),
             .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0, color: .systemPurple),
-        ], leadingCompensatedMonths: 1, trailingCompensatedMonths: 1)
+        ], leadingCompensatedMonths: 0, trailingCompensatedMonths: 0)
         
         let layout = GanttCollectionViewLayout2(config: config)
         
@@ -59,7 +59,7 @@ class GanttCollectionViewController: UICollectionViewController {
 
 extension GanttCollectionViewController {
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        chartConfig.items.count + 1
+        chartConfig.items.count + 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -78,14 +78,41 @@ extension GanttCollectionViewController {
             cell.layer.cornerRadius = 12
             var config = UIListContentConfiguration.cell()
             config.text = item.title
+            config.textProperties.color = .white
             cell.contentConfiguration = config
         case .fixedHeaderCell:
-            let config = FixedHeaderCellConfiguration(date: chartConfig.bgCell(at: indexPath).dateOfStart)
+            var config = UIListContentConfiguration.cell()
+            config.directionalLayoutMargins.leading = 0
+            
+            let date = chartConfig.bgCell(at: indexPath).dateOfStart
+            let components = Calendar.current.dateComponents([.month, .year], from: date)
+            let month = components.month!
+            let year = components.year!
+            let yearText = month == 1 ? "\(year)年" : ""
+            config.text = yearText + "\(month)月"
+            config.textProperties.font = .preferredFont(forTextStyle: .headline)
             cell.contentConfiguration = config
         case .bgCell, .fixedColumnCell:
             cell.contentConfiguration = BgCellConfiguration(index: indexPath.section)
         case .todayVerticalLine:
             cell.backgroundColor = .systemRed.withAlphaComponent(0.8)
+        case .fixedHeaderDayCell:
+            let day = chartConfig.dayCell(at: indexPath)
+            let textLabel: UILabel
+            
+            if let label = cell.contentView.subviews.first(where: { $0.tag == 1 }) as? UILabel {
+                textLabel = label
+            } else {
+                textLabel = UILabel()
+                textLabel.tag = 1
+                cell.contentView.addSubview(textLabel)
+                textLabel.frame = cell.contentView.bounds
+                textLabel.textAlignment = .center
+                textLabel.adjustsFontSizeToFitWidth = true
+                textLabel.font = .preferredFont(forTextStyle: .footnote)
+            }
+
+            textLabel.text = "\(day.day)"
         default: break
         }
         

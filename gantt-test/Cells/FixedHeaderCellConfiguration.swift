@@ -74,6 +74,7 @@ extension FixedHeaderCellConfiguration.View {
         let year = components.year!
         let yearText = month == 1 ? "\(year)年" : ""
         topLabel.text = yearText + "\(month)月"
+        topLabel.font = .preferredFont(forTextStyle: .headline)
     }
 }
 
