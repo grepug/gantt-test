@@ -11,22 +11,18 @@ class GanttChartItemCell: UICollectionViewCell {
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         
-        let attributes = layoutAttributes as! GanttChartCollectionViewLayoutAttributes
-        
-        if attributes.isOffsetXLessThanCollectionView {
-            roundCorners(corners: [.topRight, .bottomRight], radius: 12)
-        } else {
-            roundCorners(corners: [.topLeft, .bottomLeft], radius: 12)
-        }
+//        let attributes = layoutAttributes as! GanttChartCollectionViewLayoutAttributes
+//        
+//        if attributes.isOffsetXLessThanCollectionView {
+//            roundCorners(corners: [.topRight, .bottomRight], radius: 12)
+//        } else {
+//            roundCorners(corners: [.topLeft, .bottomLeft], radius: 12)
+//        }
     }
     
-    func applyConfiguration(title: String, bgColor: UIColor) {
+    func applyConfiguration(bgColor: UIColor) {
         backgroundColor = bgColor
-        
-        var config = UIListContentConfiguration.cell()
-        config.text = title
-        config.textProperties.color = .white
-        contentConfiguration = config
+        layer.cornerRadius = 12
     }
 }
 
@@ -36,5 +32,24 @@ extension UIView {
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         layer.mask = mask
+    }
+}
+
+extension String {
+    func widthOfString(usingFont font: UIFont) -> CGFloat {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        let size = self.size(withAttributes: fontAttributes)
+        return size.width
+    }
+
+    func heightOfString(usingFont font: UIFont) -> CGFloat {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        let size = self.size(withAttributes: fontAttributes)
+        return size.height
+    }
+
+    func sizeOfString(usingFont font: UIFont) -> CGSize {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        return self.size(withAttributes: fontAttributes)
     }
 }

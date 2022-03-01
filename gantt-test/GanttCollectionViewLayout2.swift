@@ -58,9 +58,11 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
                 
                 switch cellType {
                 case .todayVerticalLine:
-                    attributes.zIndex = 11
+                    attributes.zIndex = 12
                 case .itemCell:
                     attributes.zIndex = 10
+                case .itemLabelCell:
+                    attributes.zIndex = 11
                 default:
                     attributes.zIndex = 9
                 }
@@ -75,9 +77,7 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        
-        print("layout")
-        return cachedAttributesArr[indexPath.section][indexPath.item]
+        cachedAttributesArr[indexPath.section][indexPath.item]
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
@@ -86,31 +86,33 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
         var attributesArr: [UICollectionViewLayoutAttributes] = []
         
         for section in 0..<collectionView.numberOfSections {
+            var currentItemCellFrame: CGRect?
+            
             for item in 0..<collectionView.numberOfItems(inSection: section) {
                 let indexPath = IndexPath(item: item, section: section)
+                let cellType = config.cellType(at: indexPath)
                 let attributes = cachedAttributesArr[indexPath.section][indexPath.item]
                 let frame = cachedFrames[indexPath.section][indexPath.item]
-                let collectionViewOffsetX = collectionView.contentOffset.x
                 
-                if frame.intersects(rect) {
-                    if config.cellType(at: indexPath) == .itemCell {
-                        if frame.origin.x <= collectionViewOffsetX {
-                            let translationX = collectionViewOffsetX - frame.origin.x
-                            let width = frame.width - translationX
-                            let newFrame = CGRect(x: collectionViewOffsetX,
-                                                  y: frame.origin.y,
-                                                  width: width,
-                                                  height: frame.height)
-                            
-                            attributes.frame = newFrame
-                            attributes.isOffsetXLessThanCollectionView = true
-                        } else {
-                            attributes.frame = frame
-                            attributes.isOffsetXLessThanCollectionView = false
-                        }
+                switch cellType {
+                case .itemCell:
+                    currentItemCellFrame = attributes.frame
+                    
+                    if frame.intersects(rect) {
+                        attributesArr.append(attributes)
                     }
+                case .itemLabelCell:
+                    layoutItemLabelCell(itemCellFrame: currentItemCellFrame!,
+                                        itemLabelCellOriginalFrame: frame,
+                                        itemLabelCellAttributes: attributes,
+                                        in: rect,
+                                        at: indexPath)
                     
                     attributesArr.append(attributes)
+                default:
+                    if frame.intersects(rect) {
+                        attributesArr.append(attributes)
+                    }
                 }
             }
         }
@@ -120,5 +122,49 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         true
+    }
+}
+
+private extension GanttCollectionViewLayout2 {
+    func layoutItemLabelCell(itemCellFrame: CGRect,
+                             itemLabelCellOriginalFrame: CGRect,
+                             itemLabelCellAttributes: Attributes,
+                             in rect: CGRect,
+                             at indexPath: IndexPath) {
+        let collectionView = collectionView!
+        let collectionViewOffsetX = collectionView.contentOffset.x
+        let collectionViewWidth = collectionView.bounds.width
+        let collectionViewTrailingOffsetX = collectionViewOffsetX + collectionViewWidth
+        let labelFrame = itemLabelCellAttributes.frame
+        let rect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
+        let itemIntersectedFrame = itemCellFrame.intersection(rect)
+        
+        let x: CGFloat
+        
+        if itemIntersectedFrame.width > labelFrame.width {
+            x = itemIntersectedFrame.minX
+        } else {
+            
+            if itemIntersectedFrame.width > 0 {
+                if collectionViewOffsetX > itemCellFrame.minX {
+                    x = itemCellFrame.maxX
+                } else {
+                    x = itemCellFrame.minX - labelFrame.width
+                }
+            }
+            
+            else if collectionViewOffsetX > itemCellFrame.maxX {
+                x = collectionViewOffsetX
+            }
+            
+            else {
+                x = collectionViewTrailingOffsetX - labelFrame.width
+            }
+        }
+        
+        itemLabelCellAttributes.frame = CGRect(x: x,
+                                               y: labelFrame.minY,
+                                               width: labelFrame.width,
+                                               height: labelFrame.height)
     }
 }

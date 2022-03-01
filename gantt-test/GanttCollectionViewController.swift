@@ -107,8 +107,14 @@ extension GanttCollectionViewController {
             let cell = cell as! GanttChartItemCell
             let item = chartConfig.chartItem(at: indexPath)
             
-            cell.applyConfiguration(title: item.title,
-                                    bgColor: item.color)
+            cell.applyConfiguration(bgColor: item.color)
+        case .itemLabelCell:
+            let item = chartConfig.chartItem(at: indexPath)
+            
+            var config = UIListContentConfiguration.cell()
+            config.text = item.title
+            cell.contentConfiguration = config
+            cell.backgroundColor = .red.withAlphaComponent(0.1)
         case .fixedHeaderCell:
             cell.contentConfiguration = chartConfig.fixedHeaderTopCellConfiguration(at: indexPath)
         case .bgCell, .fixedColumnCell:
@@ -132,7 +138,7 @@ extension GanttCollectionViewController {
             }
 
             textLabel.text = "\(day.day)"
-        default: break
+        case .fixedFirstCell: break
         }
         
         return cell

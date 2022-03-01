@@ -118,7 +118,7 @@ extension GanttChartConfiguration {
             return dayCells.count
         }
         
-        return bgCells.count + 2
+        return bgCells.count + 3
     }
     
     var collectionViewContentSize: CGSize {
@@ -191,11 +191,17 @@ extension GanttChartConfiguration {
             return .fixedColumnCell
         }
         
-        if indexPath.item - 1 < bgCells.count {
-            return .bgCell
+        let itemsCount = collectionViewNumberOfItem(in: indexPath.section)
+        
+        if indexPath.item == itemsCount - 1 {
+            return .itemLabelCell
         }
         
-        return .itemCell
+        if indexPath.item == itemsCount - 2 {
+            return .itemCell
+        }
+        
+        return .bgCell
     }
     
     func cellFrame(at indexPath: IndexPath) -> CGRect {
@@ -236,6 +242,13 @@ extension GanttChartConfiguration {
                          height: bgCellHeight)
         case .itemCell:
             return itemFrame(inSection: normalizedSection)
+        case .itemLabelCell:
+            let itemFrame = itemFrame(inSection: normalizedSection)
+            
+            return .init(x: itemFrame.origin.x,
+                         y: itemFrame.origin.y,
+                         width: 87 + 32,
+                         height: itemHeight)
         case .todayVerticalLine:
             let beforeDays = Date.days(from: chartStartDate, to: currentDate) - 1
             let lineWidth: CGFloat = 3

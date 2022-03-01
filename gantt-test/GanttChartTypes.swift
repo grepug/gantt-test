@@ -25,6 +25,7 @@ enum GanttChartCellType: String, CaseIterable {
          fixedColumnCell,
          bgCell,
          itemCell,
+         itemLabelCell,
          todayVerticalLine
 }
 
@@ -44,6 +45,12 @@ struct GanttChartItem: Identifiable {
     var title: String
     var progress: Double
     var color: UIColor
+    
+    var font = UIFont.preferredFont(forTextStyle: .body)
+    
+    var titleWidth: CGFloat {
+        title.widthOfString(usingFont: font)
+    }
 }
 
 struct GanttBgCell {
