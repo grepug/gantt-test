@@ -81,17 +81,7 @@ extension GanttCollectionViewController {
             config.textProperties.color = .white
             cell.contentConfiguration = config
         case .fixedHeaderCell:
-            var config = UIListContentConfiguration.cell()
-            config.directionalLayoutMargins.leading = 0
-            
-            let date = chartConfig.bgCell(at: indexPath).dateOfStart
-            let components = Calendar.current.dateComponents([.month, .year], from: date)
-            let month = components.month!
-            let year = components.year!
-            let yearText = month == 1 ? "\(year)年" : ""
-            config.text = yearText + "\(month)月"
-            config.textProperties.font = .preferredFont(forTextStyle: .headline)
-            cell.contentConfiguration = config
+            cell.contentConfiguration = chartConfig.fixedHeaderTopCellConfiguration(at: indexPath)
         case .bgCell, .fixedColumnCell:
             cell.contentConfiguration = BgCellConfiguration(index: indexPath.section)
         case .todayVerticalLine:

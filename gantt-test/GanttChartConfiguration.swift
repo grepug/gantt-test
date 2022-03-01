@@ -8,7 +8,7 @@
 import UIKit
 
 struct GanttChartConfiguration {
-    var headerStyle: GanttCalendarHeaderStyle = .monthsAndDays
+    var headerStyle: GanttCalendarHeaderStyle = .weeksAndDays
     var currentDate: Date = Date()
     var cycles: [GanttChartCycle] = []
     var items: [GanttChartItem] = []
@@ -19,8 +19,8 @@ struct GanttChartConfiguration {
     var fixedColumnWidth: CGFloat = 100
     var bgCellHeight: CGFloat = 60
     var itemHeight: CGFloat = 40
-    var widthPerDay: CGFloat = 8
-    var extraWidthPerDay: CGFloat = 4
+    var widthPerDay: CGFloat = 30
+    var extraWidthPerDay: CGFloat = 0
     
     var leadingCompensatedMonths = 1
     var trailingCompensatedMonths = 1
@@ -36,9 +36,14 @@ struct GanttChartConfiguration {
     var chartStartDate: Date {
         let startOfMonth = startDate.startOfMonth()
         
-        return Calendar.current.date(byAdding: .month,
-                                     value: -leadingCompensatedMonths,
-                                     to: startOfMonth)!
+        switch headerStyle {
+        case .weeksAndDays:
+            return firstWeekDay(of: startOfMonth)
+        case .monthsAndDays:
+            return Calendar.current.date(byAdding: .month,
+                                         value: -leadingCompensatedMonths,
+                                         to: startOfMonth)!
+        }
     }
     
     var chartEndDate: Date {
@@ -47,6 +52,18 @@ struct GanttChartConfiguration {
                                                         to: endDate)!
 
         return dateOfTrailingMonth.endOfMonth()
+    }
+    
+    func firstWeekDay(of date: Date) -> Date {
+        var date = date
+        var day = Calendar.current.dateComponents([.weekday], from: date).weekday!
+        
+        while day != 2 {
+            date = Calendar.current.date(byAdding: .day, value: -1, to: date)!
+            day = Calendar.current.dateComponents([.weekday], from: date).weekday!
+        }
+        
+        return date
     }
 }
 
@@ -110,6 +127,29 @@ extension GanttChartConfiguration {
         let height = fixedHeaderHeight + CGFloat(items.count) * bgCellHeight
         
         return .init(width: width, height: height)
+    }
+    
+    func fixedHeaderTopCellConfiguration(at indexPath: IndexPath) -> UIContentConfiguration {
+        let date = bgCell(at: indexPath).dateOfStart
+        var config = UIListContentConfiguration.cell()
+        let components = Calendar.current.dateComponents([.month, .year, .weekOfYear], from: date)
+        let month = components.month!
+        let year = components.year!
+        
+        config.directionalLayoutMargins.leading = 0
+        config.textProperties.font = .preferredFont(forTextStyle: .headline)
+        
+        switch headerStyle {
+        case .monthsAndDays:
+            let yearText = month == 1 ? "\(year)年" : ""
+            config.text = yearText + "\(month)月"
+        case .weeksAndDays:
+            let week = components.weekOfYear!
+            let yearText = week == 1 ? "\(year + 1)年" : ""
+            config.text = yearText + "第\(week)周"
+        }
+        
+        return config
     }
     
     func chartItem(at indexPath: IndexPath) -> GanttChartItem {
@@ -258,7 +298,12 @@ private extension GanttChartConfiguration {
             
             cells.append(.init(width: width, dateOfStart: date))
             
-            date = Calendar.current.date(byAdding: .month, value: 1, to: date)!
+            switch headerStyle {
+            case .monthsAndDays:
+                date = Calendar.current.date(byAdding: .month, value: 1, to: date)!
+            case .weeksAndDays:
+                date = Calendar.current.date(byAdding: .day, value: 7, to: date)!
+            }
         }
         
         return cells
@@ -272,8 +317,14 @@ private extension GanttChartConfiguration {
         while date < chartEndDate {
             cells.append(.init(x: x, date: date))
             
-            date = Calendar.current.date(byAdding: .day, value: 7, to: date)!
-            x += widthPerDay * 7
+            switch headerStyle {
+            case .monthsAndDays:
+                date = Calendar.current.date(byAdding: .day, value: 7, to: date)!
+                x += widthPerDay * 7
+            case .weeksAndDays:
+                date = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+                x += widthPerDay
+            }
         }
         
         return cells
