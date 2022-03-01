@@ -69,7 +69,7 @@ private extension GanttChartConfiguration {
     
     static func getCharEndDate(date: Date) -> Date {
         let dateOfTrailingMonth = Calendar.current.date(byAdding: .month,
-                                                        value: 0,
+                                                        value: 2,
                                                         to: date)!
 
         return dateOfTrailingMonth.endOfMonth()

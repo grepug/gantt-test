@@ -66,7 +66,9 @@ extension BgCellConfiguration.View {
                                   height: bounds.height)
         
         if config.index % 2 != 0 {
-            backgroundColor = .systemGroupedBackground
+            backgroundColor = .init {
+                $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .systemGroupedBackground
+            }
         } else {
             backgroundColor = .systemBackground
         }
