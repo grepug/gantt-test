@@ -10,34 +10,12 @@ import UIKit
 class GanttCollectionViewController: UICollectionViewController {
     typealias ElementKind = GanttChartConfiguration.ElementKind
     
-    var chartConfig: GanttChartConfiguration
+    var chartConfig: GanttChartConfiguration!
     var layout: GanttCollectionViewLayout2
     let chartStyleBarItem: UIBarButtonItem = .init(title: "")
     
     init() {
-        let date1 = "2022-01-01 12:00:00".toDate()!
-        let date2 = "2022-02-28 13:00:00".toDate()!
-        
-        let date3 = "2022-02-05 12:00:00".toDate()!
-        let date4 = "2022-04-01 13:00:00".toDate()!
-        
-        let date5 = "2022-01-20 12:00:00".toDate()!
-        let date6 = "2022-03-05 13:00:00".toDate()!
-        
-        let date7 = "2021-12-05 12:00:00".toDate()!
-        let date8 = "2022-04-28 13:00:00".toDate()!
-        
-        let config = GanttChartConfiguration(items: [
-            .init(startDate: date1, endDate: date2, title: "第一个目标第一个目标第一个目标第一个目标第一个目标", progress: 0.5, color: .systemMint),
-            .init(startDate: date3, endDate: date4, title: "健康身体棒1", progress: 0.2, color: .systemGreen),
-            .init(startDate: date5, endDate: date6, title: "健康身体棒2", progress: 0.8, color: .systemBlue),
-            .init(startDate: date7, endDate: date8, title: "健康身体棒3", progress: 0.3, color: .systemPurple),
-        ], cycles: [.init(startDate: date1, endDate: date8)])
-        
-        let layout = GanttCollectionViewLayout2(config: config)
-        
-        self.layout = layout
-        self.chartConfig = config
+        self.layout = GanttCollectionViewLayout2()
 
         super.init(collectionViewLayout: layout)
     }
@@ -48,6 +26,8 @@ class GanttCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        initChartConfig()
         
         title = "Gantt Chart"
         
@@ -65,9 +45,6 @@ class GanttCollectionViewController: UICollectionViewController {
             }
         }
         
-//        collectionView.register(GanttChartCycleFrameReusableView.self,
-//                                forSupplementaryViewOfKind: ElementKind.cycleFrame.rawValue,
-//                                withReuseIdentifier: "1")
         collectionView.register(UICollectionReusableView.self,
                                 forSupplementaryViewOfKind: ElementKind.todayVerticalLine.rawValue,
                                 withReuseIdentifier: "1")
@@ -94,7 +71,31 @@ class GanttCollectionViewController: UICollectionViewController {
         
     }
     
-    func addFrameLayer() {
+    private func initChartConfig() {
+        let date1 = "2022-01-01 12:00:00".toDate()!
+        let date2 = "2022-02-28 13:00:00".toDate()!
+        
+        let date3 = "2022-02-05 12:00:00".toDate()!
+        let date4 = "2022-04-01 13:00:00".toDate()!
+        
+        let date5 = "2022-01-20 12:00:00".toDate()!
+        let date6 = "2022-03-05 13:00:00".toDate()!
+        
+        let date7 = "2021-12-05 12:00:00".toDate()!
+        let date8 = "2022-04-28 13:00:00".toDate()!
+        
+        let config = GanttChartConfiguration(items: [
+            .init(startDate: date1, endDate: date2, title: "第一个目标第一个目标第一个目标第一个目标第一个目标", progress: 0.5, color: .systemMint),
+            .init(startDate: date3, endDate: date4, title: "健康身体棒1", progress: 0.2, color: .systemGreen),
+            .init(startDate: date5, endDate: date6, title: "健康身体棒2", progress: 0.8, color: .systemBlue),
+            .init(startDate: date7, endDate: date8, title: "健康身体棒3", progress: 0.3, color: .systemPurple),
+        ], cycles: [.init(startDate: date1, endDate: date8)], widthPerDay: 40)
+        
+        self.chartConfig = config
+        self.layout.config = config
+    }
+    
+    private func addFrameLayer() {
         let dashedBorder = CAShapeLayer()
         dashedBorder.strokeColor = UIColor.systemRed.cgColor
         dashedBorder.lineDashPattern = [6, 2]
@@ -106,10 +107,11 @@ class GanttCollectionViewController: UICollectionViewController {
         collectionView.layer.addSublayer(dashedBorder)
     }
     
-    func changeChartStyle(to scale: GanttChartCalendarScale) {
+    private func changeChartStyle(to scale: GanttChartCalendarScale) {
         let chartConfig = GanttChartConfiguration(calendarScale: scale,
                                                   items: chartConfig.items,
-                                                  cycles: chartConfig.cycles)
+                                                  cycles: chartConfig.cycles,
+                                                  widthPerDay: 40)
         chartStyleBarItem.title = scale.text
         self.chartConfig = chartConfig
         layout.config = chartConfig

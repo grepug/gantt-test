@@ -38,9 +38,10 @@ struct GanttChartConfiguration {
     
     private let bgCells: [GanttBgCell]
     
-    init(calendarScale scale: GanttChartCalendarScale = .weeksAndDays,
+    init(calendarScale scale: GanttChartCalendarScale = .monthsAndDays,
          items: [GanttChartItem],
-         cycles: [GanttChartCycle]) {
+         cycles: [GanttChartCycle],
+         widthPerDay: CGFloat = 40) {
         let startDate = items.map(\.startDate).min()!
         let endDate = items.map(\.endDate).max()!
         
@@ -49,10 +50,20 @@ struct GanttChartConfiguration {
         self.chartEndDate = Self.getCharEndDate(date: endDate, trailingExtraMonths: trailingCompensatedMonths)
         self.items = items
         self.cycles = cycles
+            
+        let widthPerDay: CGFloat
+        
+        switch scale {
+        case .weeksAndDays: widthPerDay = 40
+        case .monthsAndDays: widthPerDay = 20
+        }
+        
+        self.widthPerDay = widthPerDay
         self.bgCells = Self.bgCells(startDate: chartStartDate,
                                     endDate: chartEndDate,
                                     widthPerDay: widthPerDay,
                                     in: scale)
+        
     }
 }
 

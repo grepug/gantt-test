@@ -10,15 +10,13 @@ import UIKit
 class GanttCollectionViewLayout2: UICollectionViewLayout {
     typealias Attributes = GanttChartCollectionViewLayoutAttributes
     
-    var config: GanttChartConfiguration {
+    var config: GanttChartConfiguration! {
         didSet {
             shouldPrepare = true
         }
     }
-    var shouldPrepare = true
     
-    init(config: GanttChartConfiguration) {
-        self.config = config
+    override init() {
         super.init()
     }
     
@@ -26,13 +24,13 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var cachedAttributesArr: [[Attributes]] = []
-    var cachedFrames: [[CGRect]] = []
-    
-    var cachedSupplementaryViewAttributesArr: [Attributes] = []
+    private var shouldPrepare = false
+    private var cachedAttributesArr: [[Attributes]] = []
+    private var cachedFrames: [[CGRect]] = []
+    private var cachedSupplementaryViewAttributesArr: [Attributes] = []
     
     override var collectionViewContentSize: CGSize {
-        config.collectionViewContentSize
+        config?.collectionViewContentSize ?? .zero
     }
     
     override func prepare() {
@@ -84,7 +82,7 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let collectionView = collectionView else { return nil }
+        guard let collectionView = collectionView, let config = config else { return nil }
         
         var attributesArr: [UICollectionViewLayoutAttributes] = []
         
