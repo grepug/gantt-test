@@ -89,7 +89,7 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
         var attributesArr: [UICollectionViewLayoutAttributes] = []
         
         for section in 0..<collectionView.numberOfSections {
-            var currentItemCellFrame: CGRect?
+            var currentItemCellAttributes: Attributes?
             
             for item in 0..<collectionView.numberOfItems(inSection: section) {
                 let indexPath = IndexPath(item: item, section: section)
@@ -99,13 +99,13 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
                 
                 switch cellType {
                 case .itemCell:
-                    currentItemCellFrame = attributes.frame
+                    currentItemCellAttributes = attributes
                     
                     if frame.intersects(rect) {
                         attributesArr.append(attributes)
                     }
                 case .itemLabelCell:
-                    layoutItemLabelCell(itemCellFrame: currentItemCellFrame!,
+                    layoutItemLabelCell(itemCellAttributes: currentItemCellAttributes!,
                                         itemLabelCellOriginalFrame: frame,
                                         itemLabelCellAttributes: attributes,
                                         in: rect,
@@ -140,7 +140,7 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
 }
 
 private extension GanttCollectionViewLayout2 {
-    func layoutItemLabelCell(itemCellFrame: CGRect,
+    func layoutItemLabelCell(itemCellAttributes: Attributes,
                              itemLabelCellOriginalFrame: CGRect,
                              itemLabelCellAttributes: Attributes,
                              in rect: CGRect,
@@ -151,15 +151,21 @@ private extension GanttCollectionViewLayout2 {
         let collectionViewTrailingOffsetX = collectionViewOffsetX + collectionViewWidth
         let labelFrame = itemLabelCellAttributes.frame
         let rect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
+        let itemCellFrame = itemCellAttributes.frame
         let itemIntersectedFrame = itemCellFrame.intersection(rect)
         
         let x: CGFloat
+        let itemCellLabelOffsetX: CGFloat
+        let showingLabelOnItemCell: Bool
         
         if itemIntersectedFrame.width > labelFrame.width {
-            itemLabelCellAttributes.isIntersectedWithItemCell = true
-            x = itemIntersectedFrame.minX
+            showingLabelOnItemCell = true
+            
+            x = -1000
+            itemCellLabelOffsetX = max(0, collectionViewOffsetX - itemCellFrame.minX)
         } else {
-            itemLabelCellAttributes.isIntersectedWithItemCell = false
+            showingLabelOnItemCell = false
+            itemCellLabelOffsetX = 0
             
             if itemIntersectedFrame.width > 0 {
                 if collectionViewOffsetX > itemCellFrame.minX {
@@ -182,5 +188,8 @@ private extension GanttCollectionViewLayout2 {
                                                y: labelFrame.minY,
                                                width: labelFrame.width,
                                                height: labelFrame.height)
+        itemLabelCellAttributes.showingLabelOnItemCell = showingLabelOnItemCell
+        itemCellAttributes.itemCellLabelOffsetX = itemCellLabelOffsetX
+        itemCellAttributes.showingLabelOnItemCell = showingLabelOnItemCell
     }
 }

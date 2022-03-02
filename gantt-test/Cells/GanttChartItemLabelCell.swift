@@ -25,14 +25,8 @@ class GanttChartItemLabelCell: UICollectionViewCell {
         label.textAlignment = .center
     }
     
-    func applyConfigurations(item: GanttChartItem,
-                             horizontalPadding: CGFloat = 16) {
-        label.text = item.title
-        label.font = item.font
-        label.frame = CGRect(x: horizontalPadding,
-                             y: 0,
-                             width: item.width,
-                             height: bounds.height)
+    func applyConfigurations(item: GanttChartItem) {
+        item.apply(label: label, in: bounds)
     }
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -40,7 +34,7 @@ class GanttChartItemLabelCell: UICollectionViewCell {
         
         let attributes = layoutAttributes as! GanttChartCollectionViewLayoutAttributes
         
-        if attributes.isIntersectedWithItemCell {
+        if attributes.showingLabelOnItemCell {
             label.textColor = .white
         } else {
             label.textColor = .label

@@ -60,6 +60,17 @@ struct GanttChartItem: Identifiable {
     var width: CGFloat {
         title.widthOfString(usingFont: font)
     }
+    
+    func apply(label: UILabel, in rect: CGRect) {
+        let padding: CGFloat = 16
+        
+        label.font = font
+        label.text = title
+        label.frame = CGRect(x: padding,
+                             y: 0,
+                             width: width,
+                             height: rect.height)
+    }
 }
 
 struct GanttBgCell {

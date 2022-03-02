@@ -9,12 +9,15 @@ import UIKit
 
 class GanttChartItemCell: UICollectionViewCell {
     lazy var progressView = UIView()
+    lazy var label = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         contentView.addSubview(progressView)
         contentView.roundCorners(corners: .allCorners, radius: 12)
+        contentView.addSubview(label)
+        label.textColor = .white
     }
     
     required init?(coder: NSCoder) {
@@ -23,6 +26,15 @@ class GanttChartItemCell: UICollectionViewCell {
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
+        
+        let attributes = layoutAttributes as! GanttChartCollectionViewLayoutAttributes
+        let labelOffsetX = attributes.itemCellLabelOffsetX
+        
+        label.frame = CGRect(x: labelOffsetX + 16,
+                             y: 0,
+                             width: label.bounds.width,
+                             height: label.bounds.height)
+        label.isHidden = !attributes.showingLabelOnItemCell
     }
     
     func applyConfiguration(item: GanttChartItem) {
@@ -35,5 +47,7 @@ class GanttChartItemCell: UICollectionViewCell {
                                     y: 0,
                                     width: width,
                                     height: bounds.height)
+        
+        item.apply(label: label, in: bounds)
     }
 }

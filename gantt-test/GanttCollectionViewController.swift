@@ -91,6 +91,19 @@ class GanttCollectionViewController: UICollectionViewController {
         })
         
         navigationItem.rightBarButtonItems = [chartStyleBarItem, backToTodayButton]
+        
+    }
+    
+    func addFrameLayer() {
+        let dashedBorder = CAShapeLayer()
+        dashedBorder.strokeColor = UIColor.systemRed.cgColor
+        dashedBorder.lineDashPattern = [6, 2]
+        dashedBorder.lineWidth = 3
+        dashedBorder.frame = CGRect(x: 0, y: 0, width: 1000, height: 200)
+        dashedBorder.fillColor = nil
+        dashedBorder.path = UIBezierPath(rect: dashedBorder.frame).cgPath
+        dashedBorder.zPosition = 0
+        collectionView.layer.addSublayer(dashedBorder)
     }
     
     func changeChartStyle(to style: GanttCalendarHeaderStyle) {
@@ -193,6 +206,16 @@ extension GanttCollectionViewController {
                         
                     })
                 ])
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cellType = chartConfig.cellType(at: indexPath)
+        
+        switch cellType {
+        case .itemLabelCell:
+            print("@@@", indexPath)
+        default: break
         }
     }
 }
