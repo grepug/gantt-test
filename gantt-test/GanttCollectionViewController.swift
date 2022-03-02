@@ -65,9 +65,9 @@ class GanttCollectionViewController: UICollectionViewController {
             }
         }
         
-        collectionView.register(GanttChartCycleFrameReusableView.self,
-                                forSupplementaryViewOfKind: ElementKind.cycleFrame.rawValue,
-                                withReuseIdentifier: "1")
+//        collectionView.register(GanttChartCycleFrameReusableView.self,
+//                                forSupplementaryViewOfKind: ElementKind.cycleFrame.rawValue,
+//                                withReuseIdentifier: "1")
         collectionView.register(UICollectionReusableView.self,
                                 forSupplementaryViewOfKind: ElementKind.todayVerticalLine.rawValue,
                                 withReuseIdentifier: "1")
@@ -175,10 +175,6 @@ extension GanttCollectionViewController {
         let kindEnum = ElementKind(rawValue: kind)!
 
         switch kindEnum {
-        case .cycleFrame:
-            let view = view as! GanttChartCycleFrameReusableView
-
-            view.applyConfigurations()
         case .todayVerticalLine:
             view.backgroundColor = .systemRed.withAlphaComponent(0.8)
         }

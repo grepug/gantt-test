@@ -261,20 +261,20 @@ extension GanttChartConfiguration {
     
     func supplementaryViewFrame(for kind: ElementKind) -> CGRect {
         switch kind {
-        case .cycleFrame:
-            let cycleStartDate = cycles.first!.startDate
-            let cycleEndDate = cycles.first!.endDate
-            
-            let beforeDays = Date.days(from: chartStartDate, to: cycleStartDate) - 1
-            let x = CGFloat(beforeDays) * widthPerDay + fixedColumnWidth
-            let days = Date.days(from: cycleStartDate, to: cycleEndDate)
-            let width = CGFloat(days) * widthPerDay
-            let padding: CGFloat = 16
-            
-            return .init(x: x - padding,
-                         y: fixedHeaderHeight,
-                         width: width + padding * 2,
-                         height: itemHeight * 4 + padding + 3)
+//        case .cycleFrame:
+//            let cycleStartDate = cycles.first!.startDate
+//            let cycleEndDate = cycles.first!.endDate
+//            
+//            let beforeDays = Date.days(from: chartStartDate, to: cycleStartDate) - 1
+//            let x = CGFloat(beforeDays) * widthPerDay + fixedColumnWidth
+//            let days = Date.days(from: cycleStartDate, to: cycleEndDate)
+//            let width = CGFloat(days) * widthPerDay
+//            let padding: CGFloat = 16
+//            
+//            return .init(x: x - padding,
+//                         y: fixedHeaderHeight,
+//                         width: width + padding * 2,
+//                         height: itemHeight * 4 + padding + 3)
         case .todayVerticalLine:
             let beforeDays = Date.days(from: chartStartDate, to: currentDate) - 1
             let lineWidth: CGFloat = 3
@@ -364,18 +364,16 @@ private extension GanttChartConfiguration {
 
 extension GanttChartConfiguration {
     enum ElementKind: String, CaseIterable {
-        case cycleFrame, todayVerticalLine
+        case todayVerticalLine
         
         var zIndex: Int {
             switch self {
-            case .cycleFrame: return 19
             case .todayVerticalLine: return 20
             }
         }
         
         var indexPath: IndexPath {
             switch self {
-            case .cycleFrame: return [1, 0]
             case .todayVerticalLine: return [0, 0]
             }
         }
