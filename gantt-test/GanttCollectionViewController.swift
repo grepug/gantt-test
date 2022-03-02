@@ -31,24 +31,6 @@ class GanttCollectionViewController: UICollectionViewController {
         
         title = "Gantt Chart"
         
-        for kind in GanttChartCellType.allCases {
-            switch kind {
-            case .itemCell:
-                collectionView.register(GanttChartItemCell.self,
-                                        forCellWithReuseIdentifier: kind.rawValue)
-            case .itemLabelCell:
-                collectionView.register(GanttChartItemLabelCell.self,
-                                        forCellWithReuseIdentifier: kind.rawValue)
-            default:
-                collectionView.register(UICollectionViewCell.self,
-                                        forCellWithReuseIdentifier: kind.rawValue)
-            }
-        }
-        
-        collectionView.register(UICollectionReusableView.self,
-                                forSupplementaryViewOfKind: ElementKind.todayVerticalLine.rawValue,
-                                withReuseIdentifier: "1")
-        
         collectionView.reloadData()
         
         chartStyleBarItem.menu = UIMenu(children: GanttChartCalendarScale.allCases.map { style in
