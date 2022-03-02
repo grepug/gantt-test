@@ -22,6 +22,15 @@ class GanttChartCycleFrameReusableView: UICollectionReusableView {
     
     private func setupViews() {
         addSubview(frameView)
+        
+        let dashedBorder = CAShapeLayer()
+        dashedBorder.strokeColor = UIColor.systemBlue.cgColor
+        dashedBorder.lineDashPattern = [6, 2]
+        dashedBorder.lineWidth = 3
+        dashedBorder.frame = bounds
+        dashedBorder.fillColor = nil
+        dashedBorder.path = UIBezierPath(rect: bounds).cgPath
+        layer.addSublayer(dashedBorder)
     }
     
     func applyConfigurations() {

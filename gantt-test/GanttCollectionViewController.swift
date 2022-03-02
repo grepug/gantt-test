@@ -167,8 +167,9 @@ extension GanttCollectionViewController {
         
         switch kindEnum {
         case .cycleFrame:
-            view.layer.borderColor = UIColor.systemGreen.cgColor
-            view.layer.borderWidth = 3
+            let view = view as! GanttChartCycleFrameReusableView
+            
+            view.applyConfigurations()
         case .todayVerticalLine:
             view.backgroundColor = .systemRed.withAlphaComponent(0.8)
         }
