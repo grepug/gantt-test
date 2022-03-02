@@ -252,8 +252,8 @@ extension GanttChartConfiguration {
             let itemFrame = itemFrame(inSection: normalizedSection)
             let item = chartItem(at: indexPath)
             
-            return .init(x: itemFrame.origin.x,
-                         y: itemFrame.origin.y,
+            return .init(x: itemFrame.minX,
+                         y: itemFrame.minY,
                          width: min(UIScreen.main.bounds.width / 2, item.width) + 32,
                          height: itemHeight)
         }

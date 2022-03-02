@@ -170,21 +170,21 @@ extension GanttCollectionViewController {
         return cell
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "1", for: indexPath)
-//        let kindEnum = ElementKind(rawValue: kind)!
-//
-//        switch kindEnum {
-//        case .cycleFrame:
-//            let view = view as! GanttChartCycleFrameReusableView
-//
-//            view.applyConfigurations()
-//        case .todayVerticalLine:
-//            view.backgroundColor = .systemRed.withAlphaComponent(0.8)
-//        }
-//
-//        return view
-//    }
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "1", for: indexPath)
+        let kindEnum = ElementKind(rawValue: kind)!
+
+        switch kindEnum {
+        case .cycleFrame:
+            let view = view as! GanttChartCycleFrameReusableView
+
+            view.applyConfigurations()
+        case .todayVerticalLine:
+            view.backgroundColor = .systemRed.withAlphaComponent(0.8)
+        }
+
+        return view
+    }
     
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let cellType = chartConfig.cellType(at: indexPath)
@@ -210,7 +210,11 @@ extension GanttCollectionViewController {
         
         switch cellType {
         case .itemLabelCell:
-            print("@@@", indexPath)
+            let frame = chartConfig.cellFrame(at: indexPath)
+            
+            collectionView.setContentOffset(.init(x: frame.minX,
+                                                  y: collectionView.contentOffset.y),
+                                            animated: true)
         default: break
         }
     }
