@@ -15,7 +15,7 @@ class GanttChartItemCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.addSubview(progressView)
-        contentView.roundCorners(corners: .allCorners, radius: 12)
+        contentView.layer.cornerRadius = 12
         contentView.addSubview(label)
         label.textColor = .white
     }
@@ -47,7 +47,7 @@ class GanttChartItemCell: UICollectionViewCell {
                                     y: 0,
                                     width: width,
                                     height: bounds.height)
-        
+        progressView.roundCorners(corners: [.topLeft, .bottomLeft], radius: 12)
         item.apply(label: label, in: bounds)
     }
 }

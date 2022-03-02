@@ -19,7 +19,7 @@ class GanttCollectionViewController: UICollectionViewController {
         let date2 = "2022-02-28 13:00:00".toDate()!
         
         let date3 = "2022-02-05 12:00:00".toDate()!
-        let date4 = "2022-04-28 13:00:00".toDate()!
+        let date4 = "2022-04-01 13:00:00".toDate()!
         
         let date5 = "2022-01-20 12:00:00".toDate()!
         let date6 = "2022-03-05 13:00:00".toDate()!
@@ -29,9 +29,9 @@ class GanttCollectionViewController: UICollectionViewController {
         
         let config = GanttChartConfiguration(items: [
             .init(startDate: date1, endDate: date2, title: "第一个目标第一个目标第一个目标第一个目标第一个目标", progress: 0.5, color: .systemMint),
-            .init(startDate: date3, endDate: date4, title: "健康身体棒", progress: 0.2, color: .systemGreen),
-            .init(startDate: date5, endDate: date6, title: "健康身体棒", progress: 0.8, color: .systemBlue),
-            .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0.3, color: .systemPurple),
+            .init(startDate: date3, endDate: date4, title: "健康身体棒1", progress: 0.2, color: .systemGreen),
+            .init(startDate: date5, endDate: date6, title: "健康身体棒2", progress: 0.8, color: .systemBlue),
+            .init(startDate: date7, endDate: date8, title: "健康身体棒3", progress: 0.3, color: .systemPurple),
         ], cycles: [.init(startDate: date1, endDate: date8)])
         
         let layout = GanttCollectionViewLayout2(config: config)
@@ -111,8 +111,8 @@ class GanttCollectionViewController: UICollectionViewController {
                                                   items: chartConfig.items,
                                                   cycles: chartConfig.cycles)
         chartStyleBarItem.title = style.text
-        layout.config = chartConfig
         self.chartConfig = chartConfig
+        layout.config = chartConfig
         
         collectionView.reloadData()
     }
@@ -124,11 +124,7 @@ extension GanttCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count = chartConfig.collectionViewNumberOfItem(in: section)
-        
-        print(section, count)
-        
-        return count
+        chartConfig.collectionViewNumberOfItem(in: section)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -174,21 +170,21 @@ extension GanttCollectionViewController {
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "1", for: indexPath)
-        let kindEnum = ElementKind(rawValue: kind)!
-        
-        switch kindEnum {
-        case .cycleFrame:
-            let view = view as! GanttChartCycleFrameReusableView
-            
-            view.applyConfigurations()
-        case .todayVerticalLine:
-            view.backgroundColor = .systemRed.withAlphaComponent(0.8)
-        }
-        
-        return view
-    }
+//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "1", for: indexPath)
+//        let kindEnum = ElementKind(rawValue: kind)!
+//
+//        switch kindEnum {
+//        case .cycleFrame:
+//            let view = view as! GanttChartCycleFrameReusableView
+//
+//            view.applyConfigurations()
+//        case .todayVerticalLine:
+//            view.backgroundColor = .systemRed.withAlphaComponent(0.8)
+//        }
+//
+//        return view
+//    }
     
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let cellType = chartConfig.cellType(at: indexPath)
