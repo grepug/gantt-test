@@ -53,7 +53,9 @@ struct GanttChartItem: Identifiable {
     var progress: Double
     var color: UIColor
     
-    var font = UIFont.preferredFont(forTextStyle: .body)
+    var font: UIFont {
+        .boldSystemFont(ofSize: 18)
+    }
     
     var width: CGFloat {
         title.widthOfString(usingFont: font)

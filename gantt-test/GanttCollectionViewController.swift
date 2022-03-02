@@ -28,10 +28,10 @@ class GanttCollectionViewController: UICollectionViewController {
         let date8 = "2022-04-28 13:00:00".toDate()!
         
         let config = GanttChartConfiguration(items: [
-            .init(startDate: date1, endDate: date2, title: "第一个目标第一个目标第一个目标第一个目标第一个目标", progress: 0, color: .systemMint),
-            .init(startDate: date3, endDate: date4, title: "健康身体棒", progress: 0, color: .systemGreen),
-            .init(startDate: date5, endDate: date6, title: "健康身体棒", progress: 0, color: .systemBlue),
-            .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0, color: .systemPurple),
+            .init(startDate: date1, endDate: date2, title: "第一个目标第一个目标第一个目标第一个目标第一个目标", progress: 0.5, color: .systemMint),
+            .init(startDate: date3, endDate: date4, title: "健康身体棒", progress: 0.2, color: .systemGreen),
+            .init(startDate: date5, endDate: date6, title: "健康身体棒", progress: 0.8, color: .systemBlue),
+            .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0.3, color: .systemPurple),
         ], cycles: [.init(startDate: date1, endDate: date8)])
         
         let layout = GanttCollectionViewLayout2(config: config)
@@ -128,7 +128,7 @@ extension GanttCollectionViewController {
             let cell = cell as! GanttChartItemCell
             let item = chartConfig.chartItem(at: indexPath)
             
-            cell.applyConfiguration(bgColor: item.color)
+            cell.applyConfiguration(item: item)
         case .itemLabelCell:
             let cell = cell as! GanttChartItemLabelCell
             let item = chartConfig.chartItem(at: indexPath)

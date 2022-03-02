@@ -31,10 +31,10 @@
 		2A69B6DB27CF00F60011E829 /* GanttChartItemLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6D927CF00F60011E829 /* GanttChartItemLabelCell.swift */; };
 		2A69B6DD27CF0A040011E829 /* GanttChartCycleFrameReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6DC27CF0A040011E829 /* GanttChartCycleFrameReusableView.swift */; };
 		2A69B6DE27CF0A040011E829 /* GanttChartCycleFrameReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6DC27CF0A040011E829 /* GanttChartCycleFrameReusableView.swift */; };
+		2A69B6E127CF3C030011E829 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6E027CF3C030011E829 /* Utils.swift */; };
+		2A69B6E227CF3C030011E829 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A69B6E027CF3C030011E829 /* Utils.swift */; };
 		2A8E497F27C4AB4400DA5A4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E497E27C4AB4400DA5A4D /* AppDelegate.swift */; };
 		2A8E498127C4AB4400DA5A4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */; };
-		2A8E498327C4AB4400DA5A4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E498227C4AB4400DA5A4D /* ViewController.swift */; };
-		2A8E498627C4AB4400DA5A4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A8E498427C4AB4400DA5A4D /* Main.storyboard */; };
 		2A8E498827C4AB4500DA5A4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A8E498727C4AB4500DA5A4D /* Assets.xcassets */; };
 		2A8E498B27C4AB4500DA5A4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A8E498927C4AB4500DA5A4D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -64,11 +64,10 @@
 		2A69B6D627CE4AC80011E829 /* GanttChartCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttChartCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		2A69B6D927CF00F60011E829 /* GanttChartItemLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttChartItemLabelCell.swift; sourceTree = "<group>"; };
 		2A69B6DC27CF0A040011E829 /* GanttChartCycleFrameReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttChartCycleFrameReusableView.swift; sourceTree = "<group>"; };
+		2A69B6E027CF3C030011E829 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		2A8E497B27C4AB4400DA5A4D /* gantt-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gantt-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A8E497E27C4AB4400DA5A4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2A8E498227C4AB4400DA5A4D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2A8E498527C4AB4400DA5A4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2A8E498727C4AB4500DA5A4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A8E498A27C4AB4500DA5A4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A8E498C27C4AB4500DA5A4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -112,6 +111,17 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		2A69B6DF27CF3BD50011E829 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				2A8E497E27C4AB4400DA5A4D /* AppDelegate.swift */,
+				2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */,
+				2A8E498927C4AB4500DA5A4D /* LaunchScreen.storyboard */,
+				2A8E498727C4AB4500DA5A4D /* Assets.xcassets */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		2A8E497227C4AB4400DA5A4D = {
 			isa = PBXGroup;
 			children = (
@@ -133,21 +143,17 @@
 		2A8E497D27C4AB4400DA5A4D /* gantt-test */ = {
 			isa = PBXGroup;
 			children = (
-				2A69B6C927CD0A4D0011E829 /* Cells */,
-				2A8E497E27C4AB4400DA5A4D /* AppDelegate.swift */,
-				2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */,
-				2A8E498227C4AB4400DA5A4D /* ViewController.swift */,
-				2A8E498427C4AB4400DA5A4D /* Main.storyboard */,
-				2A8E498727C4AB4500DA5A4D /* Assets.xcassets */,
-				2A8E498927C4AB4500DA5A4D /* LaunchScreen.storyboard */,
-				2A8E498C27C4AB4500DA5A4D /* Info.plist */,
-				2A69B6AE27C771E30011E829 /* GanttCollectionViewLayout.swift */,
 				2A69B6B027C886EC0011E829 /* CalendarModel.swift */,
-				2A69B6BF27CC822C0011E829 /* GanttChartConfiguration.swift */,
-				2A69B6C227CCA2580011E829 /* GanttCollectionViewLayout2.swift */,
-				2A69B6C627CCF3760011E829 /* GanttCollectionViewController.swift */,
-				2A69B6D327CE45500011E829 /* GanttChartTypes.swift */,
 				2A69B6D627CE4AC80011E829 /* GanttChartCollectionViewLayoutAttributes.swift */,
+				2A69B6BF27CC822C0011E829 /* GanttChartConfiguration.swift */,
+				2A69B6D327CE45500011E829 /* GanttChartTypes.swift */,
+				2A69B6C627CCF3760011E829 /* GanttCollectionViewController.swift */,
+				2A69B6AE27C771E30011E829 /* GanttCollectionViewLayout.swift */,
+				2A69B6C227CCA2580011E829 /* GanttCollectionViewLayout2.swift */,
+				2A69B6E027CF3C030011E829 /* Utils.swift */,
+				2A8E498C27C4AB4500DA5A4D /* Info.plist */,
+				2A69B6C927CD0A4D0011E829 /* Cells */,
+				2A69B6DF27CF3BD50011E829 /* SupportingFiles */,
 			);
 			path = "gantt-test";
 			sourceTree = "<group>";
@@ -242,7 +248,6 @@
 			files = (
 				2A8E498B27C4AB4500DA5A4D /* LaunchScreen.storyboard in Resources */,
 				2A8E498827C4AB4500DA5A4D /* Assets.xcassets in Resources */,
-				2A8E498627C4AB4400DA5A4D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +263,7 @@
 				2A69B6DE27CF0A040011E829 /* GanttChartCycleFrameReusableView.swift in Sources */,
 				2A69B6CF27CDC3B70011E829 /* BgCellConfiguration.swift in Sources */,
 				2A69B6D227CE106C0011E829 /* GanttChartItemCell.swift in Sources */,
+				2A69B6E227CF3C030011E829 /* Utils.swift in Sources */,
 				2A69B6D527CE45500011E829 /* GanttChartTypes.swift in Sources */,
 				2A69B6DB27CF00F60011E829 /* GanttChartItemLabelCell.swift in Sources */,
 				2A69B6C127CC822C0011E829 /* GanttChartConfiguration.swift in Sources */,
@@ -273,11 +279,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A69B6C027CC822C0011E829 /* GanttChartConfiguration.swift in Sources */,
-				2A8E498327C4AB4400DA5A4D /* ViewController.swift in Sources */,
 				2A69B6B127C886EC0011E829 /* CalendarModel.swift in Sources */,
 				2A69B6AF27C771E30011E829 /* GanttCollectionViewLayout.swift in Sources */,
 				2A69B6C327CCA2580011E829 /* GanttCollectionViewLayout2.swift in Sources */,
 				2A8E497F27C4AB4400DA5A4D /* AppDelegate.swift in Sources */,
+				2A69B6E127CF3C030011E829 /* Utils.swift in Sources */,
 				2A69B6D127CE106C0011E829 /* GanttChartItemCell.swift in Sources */,
 				2A8E498127C4AB4400DA5A4D /* SceneDelegate.swift in Sources */,
 				2A69B6CB27CD0A620011E829 /* FixedHeaderCellConfiguration.swift in Sources */,
@@ -301,14 +307,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2A8E498427C4AB4400DA5A4D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2A8E498527C4AB4400DA5A4D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		2A8E498927C4AB4500DA5A4D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -484,7 +482,7 @@
 				INFOPLIST_FILE = "gantt-test/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -512,7 +510,7 @@
 				INFOPLIST_FILE = "gantt-test/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

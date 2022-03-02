@@ -28,6 +28,7 @@ class GanttChartItemLabelCell: UICollectionViewCell {
     func applyConfigurations(item: GanttChartItem,
                              horizontalPadding: CGFloat = 16) {
         label.text = item.title
+        label.font = item.font
         label.frame = CGRect(x: horizontalPadding,
                              y: 0,
                              width: item.width,
