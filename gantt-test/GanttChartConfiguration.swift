@@ -38,13 +38,15 @@ struct GanttChartConfiguration {
     
     private let bgCells: [GanttBgCell]
     
-    init(items: [GanttChartItem]) {
+    init(items: [GanttChartItem],
+         cycles: [GanttChartCycle]) {
         let startDate = items.map(\.startDate).min()!
         let endDate = items.map(\.endDate).max()!
         
         self.chartStartDate = Self.getChartStartDate(date: startDate, in: headerStyle)
         self.chartEndDate = Self.getCharEndDate(date: endDate)
         self.items = items
+        self.cycles = cycles
         self.bgCells = Self.bgCells(startDate: chartStartDate,
                                     endDate: chartEndDate,
                                     widthPerDay: widthPerDay,
@@ -114,6 +116,10 @@ private extension GanttChartConfiguration {
 
 extension GanttChartConfiguration {
     func collectionViewNumberOfItem(in section: Int) -> Int {
+        if section == 0 {
+            return bgCells.count + 2
+        }
+        
         if section == 1 {
             return dayCells.count
         }
@@ -176,10 +182,6 @@ extension GanttChartConfiguration {
         }
         
         if indexPath.section == 0 {
-            if indexPath.item == bgCells.count + 1 {
-                return .todayVerticalLine
-            }
-            
             return .fixedHeaderCell
         }
         
@@ -250,6 +252,13 @@ extension GanttChartConfiguration {
                          y: itemFrame.origin.y,
                          width: min(UIScreen.main.bounds.width / 2, item.titleWidth) + 32,
                          height: itemHeight)
+        }
+    }
+    
+    func supplementaryViewFrame(for kind: ElementKind) -> CGRect {
+        switch kind {
+        case .cycleFrame:
+            return .zero
         case .todayVerticalLine:
             let beforeDays = Date.days(from: chartStartDate, to: currentDate) - 1
             let lineWidth: CGFloat = 3
@@ -333,6 +342,26 @@ private extension GanttChartConfiguration {
         switch headerStyle {
         case .weeksAndDays: return widthPerDay * 7
         case .monthsAndDays: return bgCells[index].width
+        }
+    }
+}
+
+extension GanttChartConfiguration {
+    enum ElementKind: String, CaseIterable {
+        case cycleFrame, todayVerticalLine
+        
+        var zIndex: Int {
+            switch self {
+            case .cycleFrame: return 19
+            case .todayVerticalLine: return 20
+            }
+        }
+        
+        var indexPath: IndexPath {
+            switch self {
+            case .cycleFrame: return [1, 0]
+            case .todayVerticalLine: return [0, 0]
+            }
         }
     }
 }

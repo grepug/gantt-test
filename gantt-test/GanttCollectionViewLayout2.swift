@@ -29,6 +29,8 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
     var cachedAttributesArr: [[Attributes]] = []
     var cachedFrames: [[CGRect]] = []
     
+    var cachedSupplementaryViewAttributesArr: [Attributes] = []
+    
     override var collectionViewContentSize: CGSize {
         config.collectionViewContentSize
     }
@@ -43,6 +45,7 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
         shouldPrepare = false
         cachedAttributesArr.removeAll()
         cachedFrames.removeAll()
+        cachedSupplementaryViewAttributesArr.removeAll()
         
         for section in 0..<collectionView.numberOfSections {
             var sectionArributes: [Attributes] = []
@@ -57,8 +60,6 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
                 attributes.frame = frame
                 
                 switch cellType {
-                case .todayVerticalLine:
-                    attributes.zIndex = 12
                 case .itemCell:
                     attributes.zIndex = 10
                 case .itemLabelCell:
@@ -73,6 +74,16 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
             
             cachedAttributesArr.append(sectionArributes)
             cachedFrames.append(sectionFrames)
+        }
+        
+        for kind in GanttChartConfiguration.ElementKind.allCases {
+            let frame = config.supplementaryViewFrame(for: kind)
+            let attributes = Attributes(forSupplementaryViewOfKind: kind.rawValue, with: kind.indexPath)
+            
+            attributes.frame = frame
+            attributes.zIndex = kind.zIndex
+            
+            cachedSupplementaryViewAttributesArr.append(attributes)
         }
     }
     
@@ -117,7 +128,18 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
             }
         }
         
+        for attributes in cachedSupplementaryViewAttributesArr {
+            if attributes.frame.intersects(rect) {
+                attributesArr.append(attributes)
+            }
+        }
+        
         return attributesArr
+    }
+    
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        print(elementKind)
+        return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {

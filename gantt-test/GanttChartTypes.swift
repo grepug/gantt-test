@@ -25,8 +25,7 @@ enum GanttChartCellType: String, CaseIterable {
          fixedColumnCell,
          bgCell,
          itemCell,
-         itemLabelCell,
-         todayVerticalLine
+         itemLabelCell
 }
 
 enum GattCharSection {

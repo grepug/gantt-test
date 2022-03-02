@@ -8,6 +8,8 @@
 import UIKit
 
 class GanttCollectionViewController: UICollectionViewController {
+    typealias ElementKind = GanttChartConfiguration.ElementKind
+    
     var chartConfig: GanttChartConfiguration
     var layout: GanttCollectionViewLayout2
     let chartStyleBarItem: UIBarButtonItem = .init(title: "")
@@ -30,7 +32,7 @@ class GanttCollectionViewController: UICollectionViewController {
             .init(startDate: date3, endDate: date4, title: "健康身体棒", progress: 0, color: .systemGreen),
             .init(startDate: date5, endDate: date6, title: "健康身体棒", progress: 0, color: .systemBlue),
             .init(startDate: date7, endDate: date8, title: "健康身体棒", progress: 0, color: .systemPurple),
-        ])
+        ], cycles: [.init(startDate: date1, endDate: date8)])
         
         let layout = GanttCollectionViewLayout2(config: config)
         
@@ -62,6 +64,13 @@ class GanttCollectionViewController: UICollectionViewController {
                                         forCellWithReuseIdentifier: kind.rawValue)
             }
         }
+        
+        collectionView.register(GanttChartCycleFrameReusableView.self,
+                                forSupplementaryViewOfKind: ElementKind.cycleFrame.rawValue,
+                                withReuseIdentifier: "1")
+        collectionView.register(UICollectionReusableView.self,
+                                forSupplementaryViewOfKind: ElementKind.todayVerticalLine.rawValue,
+                                withReuseIdentifier: "1")
         
         collectionView.reloadData()
         
@@ -121,8 +130,6 @@ extension GanttCollectionViewController {
             cell.contentConfiguration = chartConfig.fixedHeaderTopCellConfiguration(at: indexPath)
         case .bgCell, .fixedColumnCell:
             cell.contentConfiguration = BgCellConfiguration(index: indexPath.section)
-        case .todayVerticalLine:
-            cell.backgroundColor = .systemRed.withAlphaComponent(0.8)
         case .fixedHeaderDayCell:
             let day = chartConfig.dayCell(at: indexPath)
             let textLabel: UILabel
@@ -144,6 +151,21 @@ extension GanttCollectionViewController {
         }
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "1", for: indexPath)
+        let kindEnum = ElementKind(rawValue: kind)!
+        
+        switch kindEnum {
+        case .cycleFrame:
+            let view = view as! GanttChartCycleFrameReusableView
+            view.applyConfigurations()
+        case .todayVerticalLine:
+            view.backgroundColor = .systemRed.withAlphaComponent(0.8)
+        }
+        
+        return view
     }
     
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
