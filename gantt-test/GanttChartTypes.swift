@@ -26,6 +26,14 @@ enum GanttChartCellType: String, CaseIterable {
          bgCell,
          itemCell,
          itemLabelCell
+    
+    var zIndex: Int {
+        switch self {
+        case .itemCell: return 10
+        case .itemLabelCell: return 11
+        default: return 9
+        }
+    }
 }
 
 enum GattCharSection {

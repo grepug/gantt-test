@@ -10,14 +10,6 @@ import UIKit
 class GanttChartItemCell: UICollectionViewCell {
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        
-//        let attributes = layoutAttributes as! GanttChartCollectionViewLayoutAttributes
-//        
-//        if attributes.isOffsetXLessThanCollectionView {
-//            roundCorners(corners: [.topRight, .bottomRight], radius: 12)
-//        } else {
-//            roundCorners(corners: [.topLeft, .bottomLeft], radius: 12)
-//        }
     }
     
     func applyConfiguration(bgColor: UIColor) {

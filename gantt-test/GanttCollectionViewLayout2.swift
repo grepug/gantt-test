@@ -58,15 +58,7 @@ class GanttCollectionViewLayout2: UICollectionViewLayout {
                 let cellType = config.cellType(at: indexPath)
                 
                 attributes.frame = frame
-                
-                switch cellType {
-                case .itemCell:
-                    attributes.zIndex = 10
-                case .itemLabelCell:
-                    attributes.zIndex = 11
-                default:
-                    attributes.zIndex = 9
-                }
+                attributes.zIndex = cellType.zIndex
                 
                 sectionArributes.append(attributes)
                 sectionFrames.append(frame)
