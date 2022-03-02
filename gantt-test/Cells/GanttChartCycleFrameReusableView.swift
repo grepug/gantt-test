@@ -40,7 +40,7 @@ class GanttChartCycleFrameReusableView: UICollectionReusableView {
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         
-        let attributes = layoutAttributes as! GanttChartCollectionViewLayoutAttributes
+//        let attributes = layoutAttributes as! GanttChartCollectionViewLayoutAttributes
             
         
     }

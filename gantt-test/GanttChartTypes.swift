@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum GanttCalendarHeaderStyle: CaseIterable {
+enum GanttChartCalendarScale: CaseIterable {
     case weeksAndDays, monthsAndDays
     
     var text: String {

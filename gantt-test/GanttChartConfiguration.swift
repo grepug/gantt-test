@@ -8,7 +8,7 @@
 import UIKit
 
 struct GanttChartConfiguration {
-    var headerStyle: GanttCalendarHeaderStyle
+    var calendarScale: GanttChartCalendarScale
     var currentDate: Date = Date()
     var cycles: [GanttChartCycle] = []
     var items: [GanttChartItem]
@@ -38,31 +38,31 @@ struct GanttChartConfiguration {
     
     private let bgCells: [GanttBgCell]
     
-    init(style: GanttCalendarHeaderStyle = .weeksAndDays,
+    init(calendarScale scale: GanttChartCalendarScale = .weeksAndDays,
          items: [GanttChartItem],
          cycles: [GanttChartCycle]) {
         let startDate = items.map(\.startDate).min()!
         let endDate = items.map(\.endDate).max()!
         
-        self.headerStyle = style
-        self.chartStartDate = Self.getChartStartDate(date: startDate, in: style, leadingExtraMonths: leadingCompensatedMonths)
+        self.calendarScale = scale
+        self.chartStartDate = Self.getChartStartDate(date: startDate, in: scale, leadingExtraMonths: leadingCompensatedMonths)
         self.chartEndDate = Self.getCharEndDate(date: endDate, trailingExtraMonths: trailingCompensatedMonths)
         self.items = items
         self.cycles = cycles
         self.bgCells = Self.bgCells(startDate: chartStartDate,
                                     endDate: chartEndDate,
                                     widthPerDay: widthPerDay,
-                                    in: style)
+                                    in: scale)
     }
 }
 
 private extension GanttChartConfiguration {
     static func getChartStartDate(date: Date,
-                                  in style: GanttCalendarHeaderStyle,
+                                  in scale: GanttChartCalendarScale,
                                   leadingExtraMonths: Int) -> Date {
         let startOfMonth = date.startOfMonth()
         
-        switch style {
+        switch scale {
         case .weeksAndDays:
             return Self.firstWeekDay(of: startOfMonth)
         case .monthsAndDays:
@@ -96,7 +96,7 @@ private extension GanttChartConfiguration {
     static func bgCells(startDate: Date,
                         endDate: Date,
                         widthPerDay: CGFloat,
-                        in style: GanttCalendarHeaderStyle) -> [GanttBgCell] {
+                        in style: GanttChartCalendarScale) -> [GanttBgCell] {
         var date = startDate
         var cells: [GanttBgCell] = []
         
@@ -155,7 +155,7 @@ extension GanttChartConfiguration {
         config.directionalLayoutMargins.leading = 0
         config.textProperties.font = .preferredFont(forTextStyle: .headline)
         
-        switch headerStyle {
+        switch calendarScale {
         case .monthsAndDays:
             let yearText = month == 1 ? "\(year)年" : ""
             config.text = yearText + "\(month)月"
@@ -323,7 +323,7 @@ private extension GanttChartConfiguration {
         let item = items[index]
         let days = CGFloat(Date.days(from: item.startDate, to: item.endDate))
         
-        switch headerStyle {
+        switch calendarScale {
         case .monthsAndDays: return widthPerDay * days
         case .weeksAndDays: return widthPerDay * days
         }
@@ -341,7 +341,7 @@ private extension GanttChartConfiguration {
         while date < chartEndDate {
             cells.append(.init(x: x, date: date))
             
-            switch headerStyle {
+            switch calendarScale {
             case .monthsAndDays:
                 date = Calendar.current.date(byAdding: .day, value: 7, to: date)!
                 x += widthPerDay * 7
@@ -355,7 +355,7 @@ private extension GanttChartConfiguration {
     }
     
     func bgCellWidth(at index: Int = 0) -> CGFloat {
-        switch headerStyle {
+        switch calendarScale {
         case .weeksAndDays: return widthPerDay * 7
         case .monthsAndDays: return bgCells[index].width
         }

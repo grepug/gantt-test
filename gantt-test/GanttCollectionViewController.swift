@@ -74,12 +74,12 @@ class GanttCollectionViewController: UICollectionViewController {
         
         collectionView.reloadData()
         
-        chartStyleBarItem.menu = UIMenu(children: GanttCalendarHeaderStyle.allCases.map { style in
+        chartStyleBarItem.menu = UIMenu(children: GanttChartCalendarScale.allCases.map { style in
             UIAction(title: style.text) { [weak self] _ in
                 self?.changeChartStyle(to: style)
             }
         })
-        chartStyleBarItem.title = chartConfig.headerStyle.text
+        chartStyleBarItem.title = chartConfig.calendarScale.text
         
         let backToTodayButton = UIBarButtonItem(title: "回到今天", primaryAction: .init { [weak self] _ in
             guard let self = self else { return }
@@ -106,11 +106,11 @@ class GanttCollectionViewController: UICollectionViewController {
         collectionView.layer.addSublayer(dashedBorder)
     }
     
-    func changeChartStyle(to style: GanttCalendarHeaderStyle) {
-        let chartConfig = GanttChartConfiguration(style: style,
+    func changeChartStyle(to scale: GanttChartCalendarScale) {
+        let chartConfig = GanttChartConfiguration(calendarScale: scale,
                                                   items: chartConfig.items,
                                                   cycles: chartConfig.cycles)
-        chartStyleBarItem.title = style.text
+        chartStyleBarItem.title = scale.text
         self.chartConfig = chartConfig
         layout.config = chartConfig
         
