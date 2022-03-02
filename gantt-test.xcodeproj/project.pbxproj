@@ -37,6 +37,7 @@
 		2A8E498127C4AB4400DA5A4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8E498027C4AB4400DA5A4D /* SceneDelegate.swift */; };
 		2A8E498827C4AB4500DA5A4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A8E498727C4AB4500DA5A4D /* Assets.xcassets */; };
 		2A8E498B27C4AB4500DA5A4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A8E498927C4AB4500DA5A4D /* LaunchScreen.storyboard */; };
+		2AAB959E27CF3E070049F040 /* GanttChartItemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAB959D27CF3E070049F040 /* GanttChartItemPreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		2A8E498727C4AB4500DA5A4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A8E498A27C4AB4500DA5A4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A8E498C27C4AB4500DA5A4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2AAB959D27CF3E070049F040 /* GanttChartItemPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttChartItemPreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				2A69B6C627CCF3760011E829 /* GanttCollectionViewController.swift */,
 				2A69B6AE27C771E30011E829 /* GanttCollectionViewLayout.swift */,
 				2A69B6C227CCA2580011E829 /* GanttCollectionViewLayout2.swift */,
+				2AAB959D27CF3E070049F040 /* GanttChartItemPreviewView.swift */,
 				2A69B6E027CF3C030011E829 /* Utils.swift */,
 				2A8E498C27C4AB4500DA5A4D /* Info.plist */,
 				2A69B6C927CD0A4D0011E829 /* Cells */,
@@ -284,6 +287,7 @@
 				2A69B6C327CCA2580011E829 /* GanttCollectionViewLayout2.swift in Sources */,
 				2A8E497F27C4AB4400DA5A4D /* AppDelegate.swift in Sources */,
 				2A69B6E127CF3C030011E829 /* Utils.swift in Sources */,
+				2AAB959E27CF3E070049F040 /* GanttChartItemPreviewView.swift in Sources */,
 				2A69B6D127CE106C0011E829 /* GanttChartItemCell.swift in Sources */,
 				2A8E498127C4AB4400DA5A4D /* SceneDelegate.swift in Sources */,
 				2A69B6CB27CD0A620011E829 /* FixedHeaderCellConfiguration.swift in Sources */,

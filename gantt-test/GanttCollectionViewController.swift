@@ -182,8 +182,12 @@ extension GanttCollectionViewController {
         
         guard cellType == .itemCell else { return nil }
         
+        let item = chartConfig.chartItem(at: indexPath)
+        
         return .init(identifier: indexPath as NSCopying,
-                     previewProvider: nil) { _ in
+                     previewProvider: {
+            GanttChartItemPreviewView.makeViewController(title: item.title)
+        }) { _ in
                 .init(children: [
                     UIAction(title: "编辑", image: .init(systemName: "pencil"), handler: { _ in
                         
