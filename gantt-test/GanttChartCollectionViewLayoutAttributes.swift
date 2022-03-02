@@ -8,14 +8,14 @@
 import UIKit
 
 final class GanttChartCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
-    var isOffsetXLessThanCollectionView = false
+    var isIntersectedWithItemCell = false
     
     override func copy(with zone: NSZone?) -> Any {
         guard let copiedAttributes = super.copy(with: zone) as? GanttChartCollectionViewLayoutAttributes else {
             return super.copy(with: zone)
         }
         
-        copiedAttributes.isOffsetXLessThanCollectionView = isOffsetXLessThanCollectionView
+        copiedAttributes.isIntersectedWithItemCell = isIntersectedWithItemCell
         return copiedAttributes
     }
     
@@ -24,7 +24,7 @@ final class GanttChartCollectionViewLayoutAttributes: UICollectionViewLayoutAttr
             return false
         }
         
-        if otherAttributes.isOffsetXLessThanCollectionView != isOffsetXLessThanCollectionView {
+        if otherAttributes.isIntersectedWithItemCell != isIntersectedWithItemCell {
             return false
         }
         

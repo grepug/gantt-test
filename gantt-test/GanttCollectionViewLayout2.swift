@@ -142,8 +142,10 @@ private extension GanttCollectionViewLayout2 {
         let x: CGFloat
         
         if itemIntersectedFrame.width > labelFrame.width {
+            itemLabelCellAttributes.isIntersectedWithItemCell = true
             x = itemIntersectedFrame.minX
         } else {
+            itemLabelCellAttributes.isIntersectedWithItemCell = false
             
             if itemIntersectedFrame.width > 0 {
                 if collectionViewOffsetX > itemCellFrame.minX {

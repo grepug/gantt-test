@@ -36,7 +36,7 @@ struct GanttChartConfiguration {
     var chartStartDate: Date
     var chartEndDate: Date
     
-    private var bgCells: [GanttBgCell] = []
+    private let bgCells: [GanttBgCell]
     
     init(items: [GanttChartItem]) {
         let startDate = items.map(\.startDate).min()!
@@ -244,10 +244,11 @@ extension GanttChartConfiguration {
             return itemFrame(inSection: normalizedSection)
         case .itemLabelCell:
             let itemFrame = itemFrame(inSection: normalizedSection)
+            let item = chartItem(at: indexPath)
             
             return .init(x: itemFrame.origin.x,
                          y: itemFrame.origin.y,
-                         width: 87 + 32,
+                         width: min(UIScreen.main.bounds.width / 2, item.titleWidth) + 32,
                          height: itemHeight)
         case .todayVerticalLine:
             let beforeDays = Date.days(from: chartStartDate, to: currentDate) - 1
