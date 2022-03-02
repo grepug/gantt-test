@@ -94,9 +94,13 @@ class GanttCollectionViewController: UICollectionViewController {
     }
     
     func changeChartStyle(to style: GanttCalendarHeaderStyle) {
-        chartConfig.headerStyle = style
+        let chartConfig = GanttChartConfiguration(style: style,
+                                                  items: chartConfig.items,
+                                                  cycles: chartConfig.cycles)
         chartStyleBarItem.title = style.text
         layout.config = chartConfig
+        self.chartConfig = chartConfig
+        
         collectionView.reloadData()
     }
 }
@@ -107,7 +111,11 @@ extension GanttCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        chartConfig.collectionViewNumberOfItem(in: section)
+        let count = chartConfig.collectionViewNumberOfItem(in: section)
+        
+        print(section, count)
+        
+        return count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -159,8 +167,8 @@ extension GanttCollectionViewController {
         
         switch kindEnum {
         case .cycleFrame:
-            let view = view as! GanttChartCycleFrameReusableView
-            view.applyConfigurations()
+            view.layer.borderColor = UIColor.systemGreen.cgColor
+            view.layer.borderWidth = 3
         case .todayVerticalLine:
             view.backgroundColor = .systemRed.withAlphaComponent(0.8)
         }

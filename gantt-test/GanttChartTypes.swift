@@ -47,7 +47,7 @@ struct GanttChartItem: Identifiable {
     
     var font = UIFont.preferredFont(forTextStyle: .body)
     
-    var titleWidth: CGFloat {
+    var width: CGFloat {
         title.widthOfString(usingFont: font)
     }
 }

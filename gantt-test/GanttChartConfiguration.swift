@@ -8,7 +8,7 @@
 import UIKit
 
 struct GanttChartConfiguration {
-    var headerStyle: GanttCalendarHeaderStyle = .weeksAndDays
+    var headerStyle: GanttCalendarHeaderStyle
     var currentDate: Date = Date()
     var cycles: [GanttChartCycle] = []
     var items: [GanttChartItem]
@@ -38,25 +38,28 @@ struct GanttChartConfiguration {
     
     private let bgCells: [GanttBgCell]
     
-    init(items: [GanttChartItem],
+    init(style: GanttCalendarHeaderStyle = .weeksAndDays,
+         items: [GanttChartItem],
          cycles: [GanttChartCycle]) {
         let startDate = items.map(\.startDate).min()!
         let endDate = items.map(\.endDate).max()!
         
-        self.chartStartDate = Self.getChartStartDate(date: startDate, in: headerStyle)
-        self.chartEndDate = Self.getCharEndDate(date: endDate)
+        self.headerStyle = style
+        self.chartStartDate = Self.getChartStartDate(date: startDate, in: style, leadingExtraMonths: leadingCompensatedMonths)
+        self.chartEndDate = Self.getCharEndDate(date: endDate, trailingExtraMonths: trailingCompensatedMonths)
         self.items = items
         self.cycles = cycles
         self.bgCells = Self.bgCells(startDate: chartStartDate,
                                     endDate: chartEndDate,
                                     widthPerDay: widthPerDay,
-                                    in: headerStyle)
+                                    in: style)
     }
 }
 
 private extension GanttChartConfiguration {
     static func getChartStartDate(date: Date,
-                                  in style: GanttCalendarHeaderStyle) -> Date {
+                                  in style: GanttCalendarHeaderStyle,
+                                  leadingExtraMonths: Int) -> Date {
         let startOfMonth = date.startOfMonth()
         
         switch style {
@@ -64,14 +67,15 @@ private extension GanttChartConfiguration {
             return Self.firstWeekDay(of: startOfMonth)
         case .monthsAndDays:
             return Calendar.current.date(byAdding: .month,
-                                         value: 0,
+                                         value: leadingExtraMonths,
                                          to: startOfMonth)!
         }
     }
     
-    static func getCharEndDate(date: Date) -> Date {
+    static func getCharEndDate(date: Date,
+                               trailingExtraMonths: Int) -> Date {
         let dateOfTrailingMonth = Calendar.current.date(byAdding: .month,
-                                                        value: 2,
+                                                        value: trailingExtraMonths,
                                                         to: date)!
 
         return dateOfTrailingMonth.endOfMonth()
@@ -117,7 +121,7 @@ private extension GanttChartConfiguration {
 extension GanttChartConfiguration {
     func collectionViewNumberOfItem(in section: Int) -> Int {
         if section == 0 {
-            return bgCells.count + 2
+            return bgCells.count + 1
         }
         
         if section == 1 {
@@ -250,7 +254,7 @@ extension GanttChartConfiguration {
             
             return .init(x: itemFrame.origin.x,
                          y: itemFrame.origin.y,
-                         width: min(UIScreen.main.bounds.width / 2, item.titleWidth) + 32,
+                         width: min(UIScreen.main.bounds.width / 2, item.width) + 32,
                          height: itemHeight)
         }
     }
@@ -258,7 +262,19 @@ extension GanttChartConfiguration {
     func supplementaryViewFrame(for kind: ElementKind) -> CGRect {
         switch kind {
         case .cycleFrame:
-            return .zero
+            let cycleStartDate = cycles.first!.startDate
+            let cycleEndDate = cycles.first!.endDate
+            
+            let beforeDays = Date.days(from: chartStartDate, to: cycleStartDate) - 1
+            let x = CGFloat(beforeDays) * widthPerDay + fixedColumnWidth
+            let days = Date.days(from: cycleStartDate, to: cycleEndDate)
+            let width = CGFloat(days) * widthPerDay
+            let padding: CGFloat = 16
+            
+            return .init(x: x - padding,
+                         y: fixedHeaderHeight,
+                         width: width + padding * 2,
+                         height: itemHeight * 4 + padding + 3)
         case .todayVerticalLine:
             let beforeDays = Date.days(from: chartStartDate, to: currentDate) - 1
             let lineWidth: CGFloat = 3

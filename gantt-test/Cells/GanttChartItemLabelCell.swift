@@ -28,7 +28,10 @@ class GanttChartItemLabelCell: UICollectionViewCell {
     func applyConfigurations(item: GanttChartItem,
                              horizontalPadding: CGFloat = 16) {
         label.text = item.title
-        label.frame = contentView.bounds
+        label.frame = CGRect(x: horizontalPadding,
+                             y: 0,
+                             width: item.width,
+                             height: bounds.height)
     }
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
