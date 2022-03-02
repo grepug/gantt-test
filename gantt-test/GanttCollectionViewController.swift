@@ -11,11 +11,11 @@ class GanttCollectionViewController: UICollectionViewController {
     typealias ElementKind = GanttChartConfiguration.ElementKind
     
     var chartConfig: GanttChartConfiguration!
-    var layout: GanttCollectionViewLayout2
+    var layout: GanttCollectionViewLayout
     let chartStyleBarItem: UIBarButtonItem = .init(title: "")
     
     init() {
-        self.layout = GanttCollectionViewLayout2()
+        self.layout = GanttCollectionViewLayout()
 
         super.init(collectionViewLayout: layout)
     }
